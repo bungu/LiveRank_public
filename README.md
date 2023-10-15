@@ -21,6 +21,11 @@ https://www.liverank.jp/ranking <br >
 - Heroku
     - PostgreSQL
 
+
+# 力を入れたコード
+./Liverank/views.py はリクエストを受けた時の処理がまとまっているため多く労力を割きました。
+./management/commands/update.py は毎日の更新処理ですが、やることが多くこれにも労力を割きました。
+
 # SEO対策
 SEO対策に注力しました。<br >
 情報収集する中で複数の情報源で重要だとされた基礎的な要素(キーワード選定、altタグの設定、内部リンクの拡充等)に加え、データ列挙型サイトという形式の競争優位性に着目しました。<br >
