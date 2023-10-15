@@ -3,6 +3,8 @@ YouTube人気配信者を対象にしたスーパーチャットの集計サイ�
 事務所や言語圏(日本語/海外)で絞り込んで表示することができます。 <br >
 毎日AM10時頃に前日のスーパーチャットを集計するプログラムが動きます。 <br >
 レスポンシブ対応しているのでスマホからもご確認いただけます。
+<br >
+
  <img width="1000" src="https://www.liverank.jp/LiveRank/static/LiveRank/img/toppage_screenshot.png">
 
 # URL
