@@ -1,9 +1,9 @@
-# 自作サイト概要
+# サイト概要
 YouTube人気配信者を対象にしたスーパーチャットの集計サイトです。<br >
 事務所や言語圏(日本語/海外)で絞り込んで表示することができます。 <br >
 毎日AM10時頃に前日のスーパーチャットを集計するプログラムが動きます。 <br >
 レスポンシブ対応しているのでスマホからもご確認いただけます。
- <img width="1400" src="https://www.liverank.jp/LiveRank/static/LiveRank/img/screenshot_toppage.png">
+ <img width="1400" src="https://www.liverank.jp/LiveRank/static/LiveRank/img/toppage_screenshot.png">
 
 # URL
 https://www.liverank.jp/ranking <br >
