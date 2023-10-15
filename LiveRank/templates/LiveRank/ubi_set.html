@@ -1,0 +1,32 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'LiveRank/css/ubi.css' %}"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head>
+    <body style="background-color: #f8f6f6;">
+        <div class="container my-5">
+            <h1>機器選択ページ</h1>
+            <div class="machine_choice">
+                <form action="{% url 'ubi_set' %}" method = "post">
+                    {% csrf_token %}
+                    <div>1.操作している機械を選択してください</div>
+                    <p class="text-danger">注意: PCの操作が完了した後スマートフォンを操作してください</p>
+                        <input id="pc" type="radio" value="pc" name="machine_choice"/>
+                            <label for="pc">PC</label>
+                        <input id="video_rec" type="radio" value="video" name="machine_choice"/>
+                            <label for="video_rec">録画</label>
+                        <input id="shoulder_right" type="radio" value="shoulder_right" name="machine_choice"/>
+                            <label for="shoulder_right">右肩</label>
+                        <input id="shoulder_left" type="radio" value="shoulder_left" name="machine_choice"/>
+                            <label for="shoulder_left">左肩</label>
+                        <input id="reg_right" type="radio" value="reg_right" name="machine_choice"/>
+                            <label for="reg_right">右脚</label>
+                        <input id="reg_left" type="radio" value="reg_left" name="machine_choice"/>
+                            <label for="reg_left">左脚</label>
+                    <input type="submit" class="submit" value ="Go">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

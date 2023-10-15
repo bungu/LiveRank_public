@@ -1,0 +1,559 @@
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+<!doctype html>
+<html lang="ja">
+
+<head>
+
+  <!-- Google Tag Manager -->
+  <script>
+  (function(w,d,s,l,i)
+  {w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});
+  var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+  j.async=true;
+  j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+  f.parentNode.insertBefore(j,f);
+  })
+  (window,document,'script','dataLayer','GTM-56P7T4T');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4KCDD3XKET"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-4KCDD3XKET');
+  </script>
+  
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5103550925191375"
+     crossorigin="anonymous"></script>
+
+  <meta charset = "utf-8">
+  <meta property="og:site_name" content="ライブランク！" />
+  <title>{{title}}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'LiveRank/css/liver.css' %}"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+  <link href="{% static 'LiveRank/css/fonts.css' %}" rel="stylesheet"> 
+  <link href="{% static 'LiveRank/css/shared.css' %}" rel="stylesheet"> 
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+  <meta name="description" content="{{liver.name}}のスパチャ収益とチャンネル登録者数などのページ. 累計記録や直近一ヶ月の記録などの統計情報.">
+  <link href="{% static 'LiveRank/favicon.ico' %}" rel="icon" type="image/x-icon">
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56P7T4T"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
+  <Header>
+    <div class="header-color">
+      <div class = "menu">
+        <label for="hum">
+          <img src="{% static 'LiveRank/img/MENU.png' %}" class="menu" alt="メニュー">
+          <div class="menutext">MENU</div>
+        </label>
+      </div>
+      <div class="header-logo">
+        <a href = "{% url 'ranking_top' %}" class="headerlink">
+          <img src="{% static 'LiveRank/img/sitelogo.png' %}" class="header-logo" alt="ライブランク！"></a>
+      </div>
+      <div class="search">
+        <label for="search_check">
+          <img src="{% static 'LiveRank/img/Search.png' %}" class="search" alt="サイト内検索">
+          <div class="searchtext">検索</div>
+        </label>
+      </div>
+    </div>
+  </Header>
+
+  <input type="checkbox" id="search_check" class="search_check">
+  <div class="open_search">
+    <img src="{% static 'LiveRank/img/searchwindow.png' %}" class="hum_search" alt="サイト内検索">
+    <form action = "{% url 'find' %}" label = "find" method = "post" class="search">
+      {% csrf_token %}
+      <label class="submit" for="find"></label>
+      <input type="text" name="find" id="id_find" class = "find" placeholder = "ライバー名、事務所名など">
+      <input type="submit" id = "find" value = "click" class="submit_find">
+    </form>
+  </div>
+  <div class="back_search"><label for="search_check"></label></div>
+
+  <input type="checkbox" id="hum" class="hum_check">
+  <div class="open_menu">
+    <div class="hum_serch">
+      <img src="{% static 'LiveRank/img/searchwindow.png' %}" class="hum_search" alt="サイト内検索">
+      <form action = "{% url 'find' %}" label = "find" method = "post" class="find">
+        {% csrf_token %}
+        <label class="submit" for="find"></label>
+        <input type="text" name="find" id="id_find" class = "find" placeholder = "ライバー名、事務所名など">
+        <input type="submit" id = "find" value = "click" class="submit_find">
+      </form>
+    </div>
+    <div class="hum_h">
+      <img src="{% static 'LiveRank/img/triangle.png' %}" alt="" class="triangle">
+      <div class="in_h">
+        以下のページにジャンプ
+      </div>
+    </div>
+    <div class="choise">
+      <a href="{% url 'ranking_top' %}" class="humlink">
+        <img src="{% static 'LiveRank/img/home.png' %}" alt="ホームページ" class="home">
+        <div class="text">ホーム</div>
+      </a>
+    </div>
+    <div class="choise">
+      <a href="{% url 'ranking_top' %}" class="humlink">
+        <img src="{% static 'LiveRank/img/yen.png' %}" alt="スパチャランキング 累計" class="yen">
+        <div class="text">累計スパチャランキング</div>
+      </a>
+    </div>
+    <div class="choise">
+      <a href="{% url 'ranking' 'subscriber' 'total' '1' %}" class="humlink">
+        <img src="{% static 'LiveRank/img/person.png' %}" alt="チャンネル登録者ランキング 累計" class="person">
+        <div class="text">累計登録者ランキング</div>
+      </a>
+    </div>
+  </div>
+  <div class="open_back"><label for="hum"></label></div>
+
+  <div class="prof">
+    <table class="prof">
+      <tr>
+        <td class="liver-img"><img src="{{liver.img}}"class="liver-img" alt="{{liver.name}}"></td>
+        <td class="liver-data">
+          <ul>
+            <li class="name"><a href="https://www.youtube.com/channel/{{liver.userid}}">{{liver.name}}</a></li>
+            <li class="subscriber">
+              チャンネル登録者数 
+              <span class="subscriber_prof">{{liver.subscriber_total|div:10000}}</span>万人 
+              <a href="{% url 'ranking' 'subscriber' 'total' total_subscriber_pagenumber %}" class="rank_inline_subsc">
+              (<span class="underline">{{total_subscriber_rank}}位</span>)
+              </a>
+            </li>
+            <li class="superchat" style="font-size:1.6rem;">
+              ¥ {{liver.superchat_total| intcomma}}
+              <a href="{% url 'ranking' 'superchat' 'total' total_superchat_pagenumber %}" class="rank_inline_super">
+              {% if total_superchat_rank <= 3 %}
+              (<span class="underline">世界{{total_superchat_rank}}位</span>)
+              {% else %}
+              (<span class="underline">{{total_superchat_rank}}位</span>)
+              {% endif %}
+              </a>
+            </li>
+            <li class="tags">
+              <!-- <div>タグ：</div class="tag"> -->
+              {% for tag in liver.tags.all %}
+              <div class="tag">
+                {{tag.tag_name}}
+                <a href= "{% url 'tag_ranking' 'superchat' 'total' tag.tag_name '1' %}" class="link"></a>
+              </div>
+              {% endfor %}
+            </li>
+          </ul>
+        </td>
+      </tr>
+      </table>
+  </div>
+
+  <div class = "data">
+    <time>最終更新日：{{master_lastupdate|date:"Y-m-d"}}</time>
+    <div class="monthly-record">
+      <div class="header2">DATA (週間)</div>
+      <div class="monthly-record-value">
+
+        <div class="title">スパチャ(1週間)</div>
+        <div class="value_monthly">
+          <span class="number_monthly">+{{liver.superchat_weekly| intcomma}}</span>
+          <span class="tani">円</span>
+          <span class="permonth">/週</span>
+        </div>
+        <a href ="{% url 'ranking' 'superchat' 'weekly' weekly_superchat_pagenumber %}" class="rank">{{weekly_superchat_rank}}位</a>
+        <div class="title2">登録者数(一週間)</div>
+        <div class="value_monthly">
+          <span class="number_monthly">+{{liver.subscriber_weekly| intcomma}}</span>
+          <span class="tani">人</span>
+          <span class="permonth">/週</span>
+        </div>
+        <a class="rank" href ="{% url 'ranking' 'subscriber' 'weekly' weekly_subscriber_pagenumber %}">{{weekly_subscriber_rank}}位</a>
+
+      </div>
+    </div>
+
+    <div class="monthly-record">
+      <div class="header2">DATA (月間)</div>
+      <div class="monthly-record-value">
+
+        <div class="title">スパチャ(1ヶ月)</div>
+        <div class="value_monthly">
+          <span class="number_monthly">+{{liver.superchat_monthly| intcomma}}</span>
+          <span class="tani">円</span>
+          <span class="permonth">/月</span>
+        </div>
+        <a href ="{% url 'ranking' 'superchat' 'monthly' monthly_superchat_pagenumber %}" class="rank">{{monthly_superchat_rank}}位</a>
+        <div class="title2">登録者数(1ヶ月)</div>
+        <div class="value_monthly">
+          <span class="number_monthly">+{{liver.subscriber_monthly| intcomma}}</span>
+          <span class="tani">人</span>
+          <span class="permonth">/月</span>
+        </div>
+        <a class="rank" href ="{% url 'ranking' 'subscriber' 'monthly' monthly_subscriber_pagenumber %}">{{monthly_subscriber_rank}}位</a>
+
+      </div>
+    </div>
+
+    <!-- <div class="header2">推移グラフ(チャンネル登録者数)</div>
+    <div class="graf">
+      <canvas id="myChart" width="8000px" height="5000px" class="graf"></canvas>
+      <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        var dailys = {{daily_subscriber | safe}};
+        var sums = {{sum_subscriber | safe}}.reverse();
+        var days = {{days | safe }}.reverse();
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                  labels: days,
+                  datasets: [
+                    {
+                      label: '累計',
+                      data: sums,
+                      lineTension:0, // 直線にする
+                      borderColor: 'rgba(255, 99, 25, 1)',
+                      backgroundColor: 'rgba(255, 99, 25, 0)',
+                      type: 'line',
+                      order: 0,
+                      yAxisID: "y-1",
+                      // 点の設定
+                      pointRadius:0,
+                      pointBackgroundColor:'rgb(255, 99, 25)',
+                      // ホバー時の点の設定
+                      pointHoverRadius:5,
+                      pointHoverBackgroundColor:'rgb(255, 99, 25)',
+                    },
+                    {
+                      label: '日間',
+                      data: dailys,
+                      borderColor: 'rgba(230)',
+                      backgroundColor: 'rgba(230)',
+                      order: 1,
+                      yAxisID: "y-2",
+                      hoverBackgroundColor:'rgb(0)'
+                    }
+                  ]
+            },
+            options: {
+
+              scales: {
+                y: {
+                    beginAtZero: true
+                },
+                yAxes: [
+                  {
+                    id: "y-1",   // Y軸のID
+                    type: "linear",   // linear固定 
+                    position: "left", // どちら側に表示される軸か？
+                    ticks: {          // スケール
+                        // max: 150000,
+                        // min:0,
+                    },
+                    gridLines: {
+                      display:false
+                    },
+                    scaleLabel: {
+                      labelString: "(円)",
+                    },
+                  }, 
+                  {
+                      id: "y-2",
+                      type: "linear", 
+                      position: "right",
+                      ticks: {
+                          // max: 50000,
+                          min:0,
+                      },
+                      gridLines: {
+                        display:false
+                      },
+                  }
+                ],
+
+                xAxes: [
+                  {
+                    gridLines: {
+                        display:false
+                    },
+                  }
+                ],
+              }
+            }
+        });
+        //なんかactionってやつでできそうなんだが月/年の変更絶対やってやる
+      </script>
+    </div> -->
+
+    <div class="header2">推移グラフ(スパチャ)</div>
+    <div class="graf">
+      <canvas id="subscriberChart" width="8000px" height="5000px" class="graf"></canvas>
+      <script>
+        const ctx2 = document.getElementById('subscriberChart').getContext('2d');
+        var dailys = {{daily_superchat | safe}}.reverse();
+        var sums = {{sum_superchat | safe}}; // 合計はviewsで既に反転している
+        var days = {{days | safe }}.reverse();
+        const subscriberChart = new Chart(ctx2, {
+          // plugins:[{
+          //     afterDraw: chart => {
+          //             var ctx = chart.chart.ctx;
+          //             ctx.save();
+          //             ctx.font = "14px Arial";
+          //             ctx.fillStyle = "black";
+
+          //             ctx.textAlign = 'left';
+          //             ctx.fillText('(人)', 30, 20);
+
+          //             ctx.textAlign = 'right';
+          //             ctx.fillText('(年)', chart.chart.width - 10, 350);
+          //             ctx.restore();
+          //     }
+          //   }],
+            type: 'bar',
+            data: {
+                  labels: days,
+                  datasets: [
+                    {
+                      label: '月間',
+                      data: sums,
+                      lineTension:0, // 折れ線を直線にする
+                      borderColor: 'rgba(255, 99, 25, 1)',
+                      backgroundColor: 'rgba(255, 99, 25, 0)',
+                      type: 'line',
+                      order: 0,
+                      yAxisID: "y-1",
+                      // 点の設定
+                      pointRadius:0,
+                      pointBackgroundColor:'rgb(255, 99, 25)',
+                      // ホバー時の点の設定
+                      pointHoverRadius:5,
+                      pointHoverBackgroundColor:'rgb(255, 99, 25)',
+                    },
+                    {
+                      label: '日間',
+                      data: dailys,
+                      borderColor: 'rgba(230)',
+                      backgroundColor: 'rgba(230)',
+                      order: 1,
+                      yAxisID: "y-2",
+
+                    }
+                  ]
+            },
+            options: {
+              elements: {
+                point:{
+                  radius: 0
+                }
+              },
+              scales: {
+                y: {
+                    beginAtZero: true,
+                    scaleLabel: {
+                      display: true,
+                      labelString: "文字列"
+                    },
+                },
+                yAxes: [
+                  {
+                    id: "y-1",   // Y軸のID
+                    type: "linear",   // linear固定 
+                    position: "left", // どちら側に表示される軸か？
+                    ticks: {          // スケール
+                        // max: 150000,
+                        min:0,
+                        callback: function(label, index, labels)
+                        {return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';}
+                    },
+                    gridLines: {
+                      display:false
+                    },
+                    
+                  },
+                  {
+                    id: "y-2",
+                    type: "linear", 
+                    position: "right",
+                    ticks: {
+                        // max: 50000,
+                      min:0,
+                      callback: function(label, index, labels)
+                        {return label.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') +' 円';}
+                    },
+                    gridLines: {
+                      display:false
+                    },
+                  },
+                ],
+                xAxes: [
+                  {
+                    gridLines: {
+                        display:false
+                    },
+                    ticks: {
+
+                      callback: function(label, index, labels)
+                        {return label.toString().replace("2022-0","").replace("2022-","").replace("-","/")}
+                    },
+                  }
+                ],
+              }
+            }
+        });
+        //なんかactionってやつでできそうなんだが月/年の変更絶対やってやる
+      </script>
+    </div>
+
+    <div class="header2">推移表</div>
+    <table class="monthlytable">
+
+      <tr class="koumoku">
+        <th class="monthly">
+          日付
+        </th>
+        <th class="monthly">
+          スパチャ額
+        </th>
+        <th class="monthly">
+          登録者数
+        </th>
+      </tr>
+
+      <tr style= "border-bottom:solid 0.1rem #969696;">
+        <td class="monthly">
+          累計
+        </td>
+        <td class="total superchat monthly">
+          {{liver.superchat_total | intcomma}}円
+        </td>
+        <td class="total subscriber monthly">
+          {{liver.subscriber_total| intcomma}}
+        </td>
+      </tr>
+
+      <tr style= "border-bottom:solid 0.1rem #969696;">
+        <td class="monthly">
+          直近一ヶ月
+        </td>
+        <td class="total superchat monthly">
+          + {{liver.superchat_monthly | intcomma}}円 /月
+        </td>
+        <td class="total subscriber monthly">
+          + {{liver.subscriber_monthly| intcomma}} /月
+        </td>
+      </tr>
+
+      <tr style= "border-bottom:solid 0.1rem #969696;">
+        <td class="monthly">
+          直近一週間
+        </td>
+        <td class="total superchat monthly">
+          + {{liver.superchat_weekly | intcomma}}円 /週
+        </td>
+        <td class="total subscriber monthly">
+          + {{liver.subscriber_weekly| intcomma}} /週
+        </td>
+      </tr>
+
+      {% for day in day_records %}
+
+      {% if forloop.counter|mod:2 == 0 %}
+      <tr class = "tr-1">
+      {% else %}
+      <tr class = "tr-2">
+      {% endif %}
+
+        <td class="monthly">
+          20{{day.day | date:"y/n/j"}}
+        </td>
+        <td class="superchat monthly">
+          + {{day.superchat_daily | intcomma}}円
+        </td>
+        <td class="subscriber monthly">
+          {% if day.subscriber_total == 0 %}
+            ---
+          {% else %}
+            {{day.subscriber_total  | intcomma}}
+          {% endif %}
+        </td>
+
+      </tr>
+
+      {% endfor %}
+
+
+    </table>
+    <div class="notice">※スパチャ額はその日の通貨レートで記録されます </div>
+    <div class="header2">概要欄</div>
+    <div class = "discription">
+      {{liver.discription | linebreaksbr}}
+    </div>
+  </div>
+
+  {% if userid == "UCQ0UDLQCjY0rmuxCDE38FGg" %}
+  <!-- まつり -->　vccvbnhvgcfxzZSXDFGHGWAQ SWDERF">関連グッズ</div>
+  <iframe class="amazonlink" sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=liverank-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B095Y61LTV&linkId=975055ae32af5673ef7479dcceba044c"></iframe>
+
+  <!-- みこ -->
+  {% elif userid == "" %}
+  <div class="header2">関連グッズ</div>
+  
+  {% endif %}
+
+  <div class="ad">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5103550925191375"
+     crossorigin="anonymous"></script>
+    <!-- サイド縦長 -->
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-5103550925191375"
+        data-ad-slot="2807379512"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+  <footer>
+    <div class="foo">
+      <div class = "foo1">
+        お問合せなど
+      </div>
+      <div class="listdearu">
+        <li class = "foo"><a href = "https://forms.gle/q3BoqaVqH8SHNMYn9" class = "foolink">お問合せフォーム</a></li>
+        <li class = "foo"><a href = "{% url 'policy' %}" class = "foolink">プライバシーポリシー</a></li>
+        <!-- <li class = "foo"><a href = "{% url 'statistic_policy' %}" class = "foolink">統計方法</a></li> -->
+        <!-- <li class = "foo">運営者Twitter(@xxxxxx)</li> -->
+      </div>
+  
+      <div class = "foo1">
+        このサイトについて
+      </div>
+      <div class = "foo2">
+        このサイトではYouTubeを利用している人気配信者の<br>
+        スパチャ額や登録者数を計測しています。Google inc.との関係はありません。
+      </div>
+  
+    </div>
+  </footer>
+
+  
+
+</body>
+
+</html>
+
+<!-- TODO:グラフの横の空白レスポンシブ -->

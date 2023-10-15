@@ -1,0 +1,303 @@
+table{
+  border-collapse:collapse
+}
+
+td{
+  text-align: left;
+  /* border: solid 0.05rem #000000; */
+}
+
+div.prof{
+  margin:3rem 2.3rem 3rem 3.3rem;
+}
+
+@media (max-width:500px){
+
+  div.prof{
+    text-align:center;
+    margin:4rem 1.5rem 1.7rem 1.5rem;
+  }
+
+  ul{
+    padding-inline-start: 0px;
+  }
+
+  td.liver-img,td.liver-data{
+    display:block;
+    width:100%;
+    text-align: center;
+  }
+
+  table.prof{
+    width:100%;
+  }
+
+  li.subscriber{
+    margin-top:0.3rem
+  }
+
+  li.superchat{
+    margin-bottom:0.3rem
+  }
+
+  li.tags{
+    justify-content: center;
+  }
+
+  div.tag{
+    margin-bottom:0;
+  }
+}
+
+img.liver-img{
+  width:12rem;
+}
+
+li{
+  list-style: none;
+}
+
+@media (min-width:501px){
+  ul{
+    padding-inline-start: 20px;
+  }
+}
+
+.name{
+  font-weight:bold;
+  font-size:2.5rem;
+}
+
+li.name > a{
+  text-decoration: none;
+  color:black;
+}
+
+time{
+  display:block;
+  text-align: right;
+  margin-right:0.3rem;
+  font-size:1rem;
+  color:#888888;
+  margin-bottom:0.3rem;
+}
+
+li.subscriber{
+  font-weight: normal;
+  font-size:1.5rem;
+}
+
+span.subscriber_prof{
+  font-family: "Roboto Mono";
+}
+
+li.superchat{
+  font-family: "Roboto Mono";
+  font-weight: normal;
+  color:#DE9002;
+}
+
+a.rank_inline_subsc{
+  display:inline;
+  position:relative;
+  top:-0.1rem;
+  font-size:1.1rem;
+  text-decoration: none;
+  color:black;
+}
+
+a.rank_inline_super{
+  display:inline;
+  position:relative;
+  top:-0.1rem;
+  font-size:1.1rem;
+  text-decoration: none;
+  color:#DE9002;
+}
+
+span.underline{
+  text-decoration: underline;
+}
+
+li.tags{
+  width:100%;
+  margin: 0 auto;
+  display:flex;
+}
+
+.tag{
+  font-size:0.9rem;
+  font-family:sans-serif;
+  margin: 0.48rem 0.9rem 0.9rem 0;
+  padding: 0.29rem 0.46rem;
+  color:#727272;
+  background: blanchedalmond;
+  /* ↓リンクにするため */
+  position:relative;
+}
+
+div.header2{
+  padding:0.5rem 0 0.5rem 2rem;
+  border-top:solid 0.05rem #969696;
+  border-bottom:solid 0.05rem #969696;
+  border-right:solid 0.05rem #969696;
+  font-size:1.4rem;
+}
+
+.monthly-record-value{
+  text-align: center;
+  padding:1.5rem 0;
+}
+
+.monthly-record-value .title{
+  font-family:"Hiragino Kaku Gothic ProN";
+  font-size:1.2rem;
+  position:relative;
+  top:0rem;
+  z-index: 1;
+}
+
+.monthly-record-value .title2{
+  font-family:"Hiragino Kaku Gothic ProN";
+  font-size:1.2rem;
+  position:relative;
+  top:0rem;
+  margin-top:1rem;
+  z-index: 1;
+}
+
+span.number_monthly{
+  font-family:"Roboto Mono";
+  font-size:2.8rem;
+  font-weight: bold;
+}
+
+span.tani{
+  font-family:"Roboto Mono";
+  font-size:2.5rem;
+  font-weight: bold;
+}
+
+span.permonth{
+  font-size:1.8rem;
+  font-weight: bold;
+}
+
+.rank{
+  font-size:1.3rem;
+  color:#115AA4;
+  text-decoration: underline;
+  position:relative;
+  z-index: 1;
+  bottom:0.5rem;
+}
+
+div.graf{
+  padding: 2rem;
+  margin:auto;
+}
+
+@media (max-width:600px) {
+  div.graf{
+    width: auto;
+  }
+}
+
+@media (min-width:601px) and (max-width:949px){
+  div.graf{
+    width: 60vw;
+  }
+}
+
+@media (min-width:950px){
+  div.graf{
+    width: 570px;
+  }
+}
+
+@media (min-width:950px){
+  div.data{
+    margin-right: calc(100vw - 950px);
+  }
+
+  table.monthlytable{
+    width: calc(950px - 80px);
+  }
+}
+
+/* 以下表 */
+
+@media (max-width:949px){
+  table.monthlytable{
+    width: calc(100vw - 80px);
+  }
+}
+
+table.monthlytable{
+  margin:4rem 4rem 3rem 4rem;
+  font-size:1.2rem;
+  border:solid 0.1rem #969696;
+}
+
+tr.koumoku{
+  border:solid 0.1rem white;
+  border-bottom:solid 0.1rem #969696;
+}
+
+
+tr.tr-1{
+  background-color: white;
+}
+
+tr.tr-2{
+  background-color: #F1F1F1;
+}
+
+th.monthly{
+  padding-bottom:0.3rem;
+}
+
+td.monthly{
+  padding: 0.8rem 0;
+  text-align: center;
+  width: 33.3333%;
+}
+
+td.subscriber{
+  font-family: "Roboto Mono";
+}
+
+td.superchat{
+  font-family: "Roboto Mono";
+  font-weight: normal;
+  color:#DE9002;
+}
+
+.notice{
+  margin-left:4rem;
+  font-size: 1.1rem;
+  color: #777777;
+  position: relative;
+  top: -3rem;
+}
+
+.discription{
+  padding:3rem 3rem 0 3rem;
+  font-size:1.4rem;
+  word-break: break-word;
+}
+
+.amazonlink{
+  margin:3rem 3rem 0 3rem;
+}
+
+@media (min-width:1200px){
+  div.ad{
+    position:absolute;
+    right:4rem;
+    /* background:#F0F0F0; */
+    width:calc(100vw - 1020px);
+    top:27.4rem;
+    height:100%;
+  }
+}

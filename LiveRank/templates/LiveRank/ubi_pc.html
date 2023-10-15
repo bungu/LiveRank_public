@@ -1,0 +1,41 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'LiveRank/css/ubi.css' %}"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    </head>
+    <body>
+        <h1>データ閲覧ページ</h1>
+        <h1>計測開始時間</h1>
+        <div>{{user.start_time|date:"Y/m/d h:i:s"}}</div>
+        <h1>now</h1>
+        <div id="now"></div>
+        <h1>動画データ</h1>
+        <video controls>
+            <source src="{{ video_path.url }}" type="video/mp4">
+        </video>
+        <textarea class="form-control md-6" rows="5">{{ user.shoulder_left | safe}}</textarea>
+        <a class="btn btn-primary" href="/index" role="button">GPTの評価を見る</a>
+    </body>
+    <script type="text/javascript">
+
+        window.onload = function(){
+            //500ミリ秒毎に関数「showNowDate()」を呼び出す
+            setInterval("showNow()", 50);
+        }
+
+        function showNow(){
+            var e_time = new Date();
+            e_time.setTime(e_time.getTime() - 1000*60*60*25 - 60000);
+            var nowYear = e_time.getFullYear(); // 時を抜き出す
+            var nowMonth = ("0"+(e_time.getMonth() + 1)).slice(-2); // 時を抜き出す
+            var nowDay = ("0"+(e_time.getDate() + 1)).slice(-2); // 時を抜き出す
+            var nowHour = ("0"+(e_time.getHours() + 1)).slice(-2); // 時を抜き出す
+            var nowMin  = ("0"+(e_time.getMinutes() + 1)).slice(-2); // 時を抜き出す
+            var nowSec  =("0"+(e_time.getSeconds() + 1)).slice(-2); // 時を抜き出す
+            var time = nowYear + "/" + nowMonth + "/" + nowDay + "  " +  nowHour + ":" + nowMin + ":" + nowSec;
+            $('#now').text( time );
+        }
+    </script>
+</html>

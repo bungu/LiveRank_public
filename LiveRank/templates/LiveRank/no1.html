@@ -1,0 +1,74 @@
+{% load static %}
+{% load humanize %}
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'LiveRank/css/no1.css' %}"/>
+        <meta name="robots" content="noindex">
+    </head>
+   <body style="height:60rem;">
+    <div class="body">
+        <img src="{{liver.img}}" class="liver-img">
+
+        <div class="title">
+            {{last_update|date:"Y/m/d"}}<span class="youbi">{{youbi}}</span>
+            <br>
+            {% if tagcheck == True %}
+            ホロライブ 日間スーパーチャット額
+            {% else %}
+            日間スーパーチャット額(国内)
+            {% endif %}
+        </div>
+
+        <div class="rank">
+            １位<span class="kome">※</span>
+        </div>
+        <div class="livername">
+            {{liver.name}}
+        </div>
+
+        <div class="record">
+            {% if term == "monthly" %}
+            +{{liver.superchat_monthly|intcomma}}<span class="small">円 /月</span>
+            {% elif term == "weekly" %}
+            +{{liver.superchat_weekly|intcomma}}<span class="small">円 /週</span>
+            {% elif term == "daily" %}
+            +{{liver.superchat_daily|intcomma}}<span class="small">円 /日</span>
+            {% endif %}
+        </div>
+
+        <div class="sansho">
+            {% if term == "monthly" %}
+            ※データ元：https://www.liverank.jp/ranking/superchat/monthly/国内/1
+            {% elif term == "weekly" %}
+            ※データ元：https://www.liverank.jp/ranking/superchat/weekly/国内/1
+            {% elif term == "daily" %}
+            ※データ元：https://www.liverank.jp/ranking/superchat/daily/国内/1
+            {% endif %}
+        </div>
+    </div>
+
+   </body>
+
+   {% if livername_dan == 1 %}
+
+   <style>
+       div.livername,div.record{
+           top:-1rem;
+       }
+
+       div.record{
+           padding-bottom:1.5rem;
+       }
+   </style>
+
+   {% elif livername_dan == 2 %}
+
+   <style>
+        div.record{
+            padding-bottom:1.5rem;
+        }
+    </style>
+
+   {% endif %}
+
+</html>

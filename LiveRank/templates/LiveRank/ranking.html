@@ -1,0 +1,626 @@
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+<!doctype html>
+<html lang="ja">
+
+<head>
+
+  <!-- Google Tag Manager -->
+  <script>
+  (function(w,d,s,l,i)
+  {w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});
+  var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;
+  j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+  f.parentNode.insertBefore(j,f);
+  })
+  (window,document,'script','dataLayer','GTM-56P7T4T');
+  </script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4KCDD3XKET"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-4KCDD3XKET');
+  </script>
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5103550925191375"
+     crossorigin="anonymous"></script>
+
+  <meta charset = "utf-8">
+  <meta property="og:site_name" content="ライブランク！" />
+  <title>{{title}}</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'LiveRank/css/ranking.css' %}"/>
+  <link href="{% static 'LiveRank/css/fonts.css' %}" rel="stylesheet"> 
+  <link href="{% static 'LiveRank/css/shared.css' %}" rel="stylesheet"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"> 
+  {% if page == 1 %}
+  <meta name = "description" content="YouTube有名配信者の{{term_jap}}{{order_jap}}ランキングページ。Vtuber(ホロライブ、にじさんじなど)やその他配信者の{{order_jap}}を集計。(1-10件目を表示)">
+  {% else %}
+  <meta name = "description" content="YouTube有名配信者の{{term_jap}}{{order_jap}}ランキングページ。Vtuber(ホロライブ、にじさんじなど)やその他配信者の{{order_jap}}を集計。">
+  <meta name="robots" content="noindex">
+  {% endif %}
+  <link href="{% static 'LiveRank/favicon.ico' %}" rel="icon">
+</head>
+
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-56P7T4T"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <Header>
+    <div class="header-color">
+      <div class = "menu">
+        <label for="hum">
+          <img src="{% static 'LiveRank/img/MENU.png' %}" class="menu" alt="メニュー" style="height:22px; width:34.8px;">
+          <div class="menutext">MENU</div>
+        </label>
+      </div>
+      <div class="header-logo">
+        <a href = "{% url 'ranking_top' %}" class="headerlink">
+          <img src="{% static 'LiveRank/img/sitelogo.png' %}" class="header-logo" alt="ライブランク！" style="height:34px; width:117.4px;"></a>
+      </div>
+      <div class="search">
+        <label for="search_check">
+          <img src="{% static 'LiveRank/img/Search.png' %}" class="search" alt="サイト内検索" style="height:22.2px; width:22.3px;">
+          <div class="searchtext">検索</div>
+        </label>
+      </div>
+    </div>
+  </Header>
+
+  <aside>
+
+    <input type="checkbox" id="search_check" class="search_check">
+    <div class="open_search">
+      <img src="{% static 'LiveRank/img/searchwindow.png' %}" class="hum_search" alt="サイト内検索" style="width:270px; height:35.3px;">
+      <form action = "{% url 'find' %}" label = "find" method = "post" class="search">
+        {% csrf_token %}
+        <label class="submit" for="find"></label>
+        <input type="text" name="find" id="id_find" class = "find" placeholder = "ライバー名、事務所名など">
+        <input type="submit" id = "find" value = "click" class="submit_find">
+      </form>
+    </div>
+    <div class="back_search"><label for="search_check"></label></div>
+  
+    <input type="checkbox" id="hum" class="hum_check">
+    <div class="open_menu">
+      <div class="hum_serch">
+        <div for = "find">
+          <img src="{% static 'LiveRank/img/searchwindow.png' %}" class="hum_search" alt="サイト内検索" style="width:270px;  height:35.3px;">
+          <form action = "{% url 'find' %}" label = "find" method = "post" class="find">
+            {% csrf_token %}
+            <label class="submit" for="find"></label>
+            <input type="text" name="find" id="id_find" class = "find" placeholder = "ライバー名、事務所名など">
+            <input type="submit" id = "find" value = "click" class="submit_find">
+          </form>
+        </div>
+      </div>
+      <div class="hum_h">
+        <img src="{% static 'LiveRank/img/triangle.png' %}" alt="" class="triangle" style="width:12px; height:8px;">
+        <div class="in_h">
+          以下のページにジャンプ
+        </div>
+      </div>
+      <div class="choise">
+        <a href="{% url 'ranking_top' %}" class="humlink">
+          <img src="{% static 'LiveRank/img/home.png' %}" alt="ホームページ" class="home" style="width:62px; height:50px;">
+          <div class="text">ホーム</div>
+        </a>
+      </div>
+      <div class="choise">
+        <a href="{% url 'ranking' 'superchat' 'total' '1' %}" class="humlink">
+          <img src="{% static 'LiveRank/img/yen.png' %}" alt="スパチャランキング 累計,投げ銭,収益" class="yen" style="width:34.5px; height:34.5px;">
+          <div class="text">累計スパチャランキング</div>
+        </a>
+      </div>
+      <div class="choise">
+        <a href="{% url 'ranking' 'subscriber' 'total' '1' %}" class="humlink">
+          <img src="{% static 'LiveRank/img/person.png' %}" alt="チャンネル登録者ランキング 累計" class="person" style="width:25.5px; height:34.5px;">
+          <div class="text">累計登録者ランキング</div>
+        </a>
+      </div>
+    </div>
+    <div class="open_back"><label for="hum"></label></div>
+
+  </aside>
+
+  <article>
+
+  <div class="upad_for_smaho">
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5103550925191375"
+      crossorigin="anonymous"></script>
+  <!-- スマホ用上部 -->
+  <ins class="adsbygoogle"
+      style="display:inline-block;width:375px;height:70px"
+      data-ad-client="ca-pub-5103550925191375"
+      data-ad-slot="2372286668"></ins>
+  <script>
+      (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+  
+  </div>
+
+  <section>
+    <div class="h">
+      <h1>
+        {{h1|safe | escape | linebreaksbr}}
+      </h1>
+      <div class = "h2">
+        {{h2 | linebreaksbr}}
+        {% if tagcheck == True %}
+        (<a href = "{% url 'ranking_top' %}" class="linktotop">トップへ戻る</a>)
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <input type="checkbox" id="filter" class="filter_check">
+  <label for="filter" class="filter_button">絞り込み (事務所など)</label>
+
+  <div class = "filter">
+    <form action = "{% url 'filter' order term %}" label = "filter_post" method = "post">
+      {% csrf_token %}
+      <div class="filter_h">絞り込み</div>
+
+      <div class="filter_choices">
+
+        <div class="filter_kind">
+          <div class="filter_h2">
+            所属事務所
+          </div>
+          <div class="checks_flex">
+            <label for="hololive" class="filter_mainlabel">
+              <input type="checkbox" name="hololive" id="hololive" class="filter_check_">
+              <label for="hololive" class="checkbox_img"></label>
+              <label for="hololive" class="filter_text">ホロライブ</label>
+            </label>
+            <label for="nijisanji" class="filter_mainlabel">
+              <input type="checkbox" name="nijisanji" id="nijisanji" class="filter_check_">
+              <label for="nijisanji" class="checkbox_img"></label>
+              <label for="nijisanji" class="filter_text">にじさんじ</label>
+            </label>
+            <label for="others" class="filter_mainlabel">
+              <input type="checkbox" name="others" id="others" class="filter_check_">
+              <label for="others" class="checkbox_img"></label>
+              <label for="others" class="filter_text">その他</label>
+            </label>
+            <label for="indivisuals" class="filter_mainlabel">
+              <input type="checkbox" name="indivisuals"  id="indivisuals" class="filter_check_">
+              <label for="indivisuals" class="checkbox_img"></label>
+              <label for="indivisuals" class="filter_text">個人勢</label>
+            </label>
+          </div>
+        </div>
+
+        <div class="filter_kind">
+          <div class="filter_h2">
+            性別
+          </div>
+          <div class="checks_flex">
+            <label for="female" class="filter_mainlabel">
+              <input type="checkbox" name="female" id="female" class="filter_check_">
+              <label for="female" class="checkbox_img"></label>
+              <label for="female" class="filter_text">女性</label>
+            </label>
+            <label for="male" class="filter_mainlabel">
+              <input type="checkbox" name="male" id="male" class="filter_check_">
+              <label for="male" class="checkbox_img"></label>
+              <label for="male" class="filter_text">男性</label>
+            </label>
+          </div>
+        </div>
+
+        <div class="filter_kind">
+          <div class="filter_h2">
+            配信タイプ
+          </div>
+          <div class="checks_flex">
+            <label for="vtuber" class="filter_mainlabel">
+              <input type="checkbox" name="vtuber" id="vtuber" class="filter_check_">
+              <label for="vtuber" class="checkbox_img"></label>
+              <label for="vtuber" class="filter_text">Vtuber</label>
+            </label>
+            <label for="notV" class="filter_mainlabel">
+              <input type="checkbox" name="notV" id="notV" class="filter_check_">
+              <label for="notV" class="checkbox_img"></label>
+              <label for="notV" class="filter_text">一般</label>
+            </label>
+          </div>
+        </div>
+
+        <div class="filter_kind">
+          <div class="filter_h2">
+            その他
+          </div>
+          <div class="checks_flex">
+
+            <label for="music" class="filter_mainlabel">
+              <input type="checkbox" name="music" id="music" class="filter_check_">
+              <label for="music" class="checkbox_img"></label>
+              <label for="music" class="filter_text">音楽</label>
+            </label>
+
+            <label for="Global" class="filter_mainlabel">
+              <input type="checkbox" name="Global" id="Global" class="filter_check_">
+              <label for="Global" class="checkbox_img"></label>
+              <label for="Global" class="filter_text">Global</label>
+            </label>
+
+            <label for="japan" class="filter_mainlabel">
+              <input type="checkbox" name="japan" id="japan" class="filter_check_">
+              <label for="japan" class="checkbox_img"></label>
+              <label for="japan" class="filter_text">国内</label>
+            </label>
+
+          </div> 
+        </div>
+
+      </div>
+      <div class="white">
+        <input type="submit" id="filter_submit" class="filter_submit">
+        <label class="filter_submit" for="filter_submit">
+          この条件で絞り込む
+        </label>
+      </div>
+    </form>
+    <label for="filter"><img src="{% static 'LiveRank/img/close_white.png' %}" alt="閉じる" class="close"></label>
+  </div>
+  <div class="filter_back"><label for="filter"></label></div>
+
+  <div class="choice_big">
+
+    <div class="ad">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5103550925191375"
+       crossorigin="anonymous"></script>
+      <!-- サイド縦長 -->
+      <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-5103550925191375"
+          data-ad-slot="2807379512"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+
+    <div class = "radio">
+      <!-- スパチャ順の場合 -->
+      {% if order == "superchat" %}
+        <!-- 以下スパチャ順 -->
+        <div class = "radiochil">
+        <!-- <input type="radio" checked required class = "radio"> -->
+        <img src="{% static 'LiveRank/img/radio-on.png' %}" alt="スパチャ順,スーパーチャット順,収益順" class="radio" style="width:16px; height:16px;">スパチャ順
+        </div>
+      <!-- 以下登録者順 -->
+        {% if tagcheck == False %}
+          {% if findcheck == False %}
+          <a href="{% url 'ranking' 'subscriber' term '1' %}" class="radiolink">
+          {% elif findcheck == True %}
+          <a href="{% url 'find_ranking' 'subscriber' term find '1' %}" class="radiolink">
+          {% endif %}
+        {% elif tagcheck == True %}
+          <a href="{% url 'tag_ranking' 'subscriber' term tagname '1' %}" class="radiolink">
+        {% endif %}
+            <div class = "radiochil">
+            <img src="{% static 'LiveRank/img/radio-off.png' %}" alt="チャンネル登録者数順" class="radio" style="width:16px; height:16px;">登録者順
+            </div>
+          </a>
+    
+      <!-- 登録者順の場合 -->
+      {% elif order == "subscriber" %}
+      <!-- 以下スパチャ順 -->
+        {% if tagcheck == False %}
+          {% if findcheck == False %}
+          <a href="{% url 'ranking' 'superchat' term '1' %}" class="radiolink">
+          {% elif findcheck == True %}
+          <a href="{% url 'find_ranking' 'superchat' term find '1' %}" class="radiolink">
+          {% endif %}
+        {% elif tagcheck == True %}
+          <a href="{% url 'tag_ranking' 'superchat' term tagname '1' %}" class="radiolink">
+        {% endif %}
+            <div class = "radiochil">
+              <img src="{% static 'LiveRank/img/radio-off.png' %}" alt="スパチャ順 スーパーチャット順" class="radio" style="width:16px; height:16px;">
+              スパチャ順
+            </div>
+          </a>
+      <!-- 以下登録者順 -->
+        <div class = "radiochil">
+          <img src="{% static 'LiveRank/img/radio-on.png' %}" alt="チャンネル登録者数順" class="radio" style="width:16px;  height:16px;">
+          登録者順
+        </div>
+      {% endif %}
+      </div>
+
+      <time>最終更新日：{{master_lastupdate|date:"Y-m-d"}}</time>
+    
+      <div class="termtab">
+        <!-- ↓もしタグが指定されたランキングなら -->
+        {% if tagcheck == True %}
+        <a href= "{% url 'tag_ranking' order 'monthly' tagname '1' %}" class="monthly">
+        {% elif tagcheck == False %}
+          {% if findcheck == True %}
+        <a href= "{% url 'find_ranking' order 'monthly' find '1' %}" class="monthly">
+          {% elif findcheck == False %}
+        <a href= "{% url 'ranking' order 'monthly' '1' %}" class="total">
+          {% endif %}
+        {% endif %}
+            <div class="monthly">
+                <img src="{% static 'LiveRank/img/extention1.png' %}" class="extention" alt="" style="width:8.5px; height:5.2px;">
+                <div>月間</div>
+            </div>
+        </a>
+    
+        {% if tagcheck == True %}
+        <a href= "{% url 'tag_ranking' order 'total' tagname '1' %}" class="total">
+        {% elif tagcheck == False %}
+          {% if findcheck == True %}
+        <a href= "{% url 'find_ranking' order 'total' find '1' %}" class="total">
+          {% elif findcheck == False %}
+        <a href= "{% url 'ranking' order 'total' '1' %}" class="total">
+          {% endif %}
+        {% endif %}
+          <div class="total">
+              <img src="{% static 'LiveRank/img/extention1.png' %}" class="extention" style="width:8.5px;  height:5.2px;">
+              <div>累計</div>
+          </div>
+        </a>
+    
+        {% if tagcheck == True %}
+        <a href= "{% url 'tag_ranking' order 'daily' tagname '1' %}" class="daily">
+        {% elif tagcheck == False %}
+          {% if findcheck == True %}
+        <a href= "{% url 'find_ranking' order 'daily' find '1' %}" class="daily">
+          {% elif findcheck == False %}
+        <a href= "{% url 'ranking' order 'daily' '1' %}" class="total">
+          {% endif %}
+        {% endif %}
+          <div class="daily">
+            <img src="{% static 'LiveRank/img/extention1.png' %}" class="extention" style="width:8.5px;  height:5.2px;">
+            <div>日間</div>
+          </div>
+        </a>
+    
+      </div>
+
+  </div>
+
+  <!-- ここから本テーブル -->
+
+  <table class="table">
+  {% for liver in data %}
+    {% if forloop.counter|mod:2 == 1 %}
+    <tr class="liver">
+      <td class="liver" style="border-right: 1px solid #DFDFDF;">
+    {% else %}
+      <td class="liver">
+    {% endif %}
+        <div><div class="rank-number">{{forloop.counter|addition:ranking_addition_number}}</div></div>
+        <div class="liver-img-div" style="width:8.8rem;"><img src="{{liver.img}}"class="liver-img" alt="{{liver.name}}" style="width:92px;  height:92px;"><a href= "{% url 'liver' liver.userid %}" class="link"></a></div>
+        <div class="liver-data">
+          <ul>
+            <div>
+              <a href= "{% url 'liver' liver.userid %}" class="liver_link">
+                <li class="name">{{liver.name}}</li>
+              
+                {% if order == "subscriber" %}
+                <li class="subscriber">
+                  <img src="{% static 'LiveRank/img/smallperson.png' %}" alt="チャンネル登録者数" class="smallperson" style="width:13px; height:17.5px;">
+                  {% if term == "total" %}  
+                  {{liver.subscriber_total|div:10000}}<span class="arial">万人</span>
+                  {% elif term == "monthly" %}
+                    + {{liver.subscriber_monthly|div:10000}}<span class="arial">万人</span> /月
+                  {% elif term == "weekly" %}
+                    + {{liver.subscriber_weekly|div:10000}}<span class="arial">万人</span> /週
+                  {% elif term == "daily" %}
+                    + {{liver.subscriber_daily|intcomma}}<span class="arial">人</span> /日
+                  {% endif %}
+
+                  {% if term != "total" %}
+                  <span class="total_annotation"><span class="arial">(計</span>{{liver.subscriber_total|div:10000}}<span class="arial">万人)</span></span>
+                  {% endif %}
+                  
+                </li>
+                {% endif %}
+    
+                <li class="superchat"><img src="{% static 'LiveRank/img/smallyen.png' %}" alt="スーパーチャット,スパチャ,投げ銭,収益"  class="smallyen" style="width:15px; height:15px;">
+                {% if term == "total" %}
+                {{liver.superchat_total | intcomma}}円
+                {% elif term == "monthly" %}
+                {{liver.superchat_monthly | intcomma}}円 /月
+                {% elif term == "weekly" %}
+                {{liver.superchat_weekly | intcomma}}円 /週
+                {% elif term == "daily" %}
+                {{liver.superchat_daily | intcomma}}円 /日
+                {% endif %}
+                </li>
+                {% if order == "superchat" %}
+                <li class="subscriber">
+                  <img src="{% static 'LiveRank/img/smallperson.png' %}" alt="チャンネル登録者数" class="smallperson" style="width:13px;  height:17.5px;"> {{liver.subscriber_total|div:10000}}<span class="arial">万人</span>
+                </li>
+                {% endif %}
+              </a>
+            </div>
+            
+            <li class="tags">
+              {% for tag_object in liver.tags.all %}
+              <div class="tag">
+                {{tag_object.tag_name}}
+                <a href= "{% url 'tag_top' tag_object.tag_name %}" class="link"></a>
+              </div>
+              {% endfor %}
+            </li>
+          </ul>
+        </div>
+      </td>
+    {% if forloop.counter|mod:2 == 0 %}
+    </tr>
+    {% elif forloop.last %}
+    </tr>
+    {% endif %}
+  {% endfor %}
+  </table>
+  <div class="tag_notice">※タグをクリックするとそのタグを含むライバーのみ表示されます　例) ホロライブ, 個人勢など</div>
+  <div class="tag_notice">※ブラウザの種類によりレイアウトが少し崩れる場合があります 推奨：Safari,Chrome</div>
+  <div class="tag_notice">※通貨レートは一日毎に更新されます </div>
+  
+  <div class="paginator">
+    {% for i in total_pages %}
+    {% if tagcheck == True %}
+    <a href= "{% url 'tag_ranking' order term tagname i %}" class="paginatorlink">
+    {% elif tagcheck == False %}
+      {% if findcheck == True %}
+    <a href= "{% url 'find_ranking' order term find i %}" class="paginatorlink">
+      {% elif findcheck == False %}
+    <a href= "{% url 'ranking' order term i %}" class="paginatorlink">
+      {% endif %}
+    {% endif %}
+      {% if forloop.counter == page %}
+      <div class="paginator_bold">{{i}}</div>
+      {% else %}
+      <div>{{i}}</div>
+      {% endif %}
+    </a>
+    {% endfor %}
+
+    {% if page == total_pages|last %}
+    {% else %}
+    {% if tagcheck == True %}
+    <a href= "{% url 'tag_ranking' order term tagname page|add:'1' %}" class="paginatorlink" style="text-decoration: none;">
+    {% elif tagcheck == False %}
+      {% if findcheck == True %}
+    <a href= "{% url 'find_ranking' order term find page|add:'1' %}" class="paginatorlink" style="text-decoration: none;">
+      {% elif findcheck == False %}
+    <a href= "{% url 'ranking' order term page|add:'1' %}" class="paginatorlink" style="text-decoration: none;">
+      {% endif %}
+    {% endif %}
+      <div class="next">次へ</div>
+    </a>
+    {% endif %}
+  </div>
+
+  <div class="ad2">
+
+    <div class="google">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5103550925191375"
+      crossorigin="anonymous"></script>
+     <!-- スクエア -->
+     <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-5103550925191375"
+         data-ad-slot="7482263330"></ins>
+     <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+     </script>
+    </div>
+
+    <div class="ad2-2">
+      <div class="google">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5103550925191375"
+        crossorigin="anonymous"></script>
+       <!-- スクエア -->
+       <ins class="adsbygoogle"
+           style="display:inline-block;width:300px;height:250px"
+           data-ad-client="ca-pub-5103550925191375"
+           data-ad-slot="7482263330"></ins>
+       <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+       </script>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ここから変数で分岐する系のスタイルシート -->
+
+  {% if term == "total" %}
+  <style>
+    div.total{
+      background-color:#DE9000;
+      color:white;
+    }
+    div.monthly,div.daily{
+      background-color:#FFFFFF;
+      color:#DE9000;
+    }
+    div.monthly:hover,div.daily:hover{
+      background: navajowhite;
+    }
+  </style>
+  {% elif term == "monthly" %}
+  <style>
+    div.monthly{
+      background-color:#DE9000;
+      color:white;
+    }
+    div.total,div.daily{
+      background-color:#FFFFFF;
+      color:#DE9000;
+    }
+    div.total:hover,div.daily:hover{
+      background: navajowhite;
+    }
+  </style>
+  {% elif term == "weekly" %}
+  <style>
+    div.total,div.monthly,div.daily{
+      background-color:#FFFFFF;
+      color:#DE9000;
+    }
+    div.total:hover,div.monthly:hover,div.daily:hover{
+      background: navajowhite;
+    }
+  </style>
+  {% elif term == "daily" %}
+  <style>
+    div.daily{
+      background-color:#DE9000;
+      color:white;
+    }
+    div.total,div.monthly{
+      background-color:#FFFFFF;
+      color:#DE9000;
+    }
+    div.total:hover,div.monthly:hover{
+      background: navajowhite;
+    }
+  </style>
+
+  {% endif %}
+
+  </article>
+
+  <footer>
+    <div class="foo">
+      <div class = "foo1">
+        お問合せなど
+      </div>
+      <div class="listdearu">
+        <li class = "foo"><a href = "https://forms.gle/q3BoqaVqH8SHNMYn9" class = "foolink">お問合せフォーム</a></li>
+        <li class = "foo"><a href = "{% url 'policy' %}" class = "foolink">プライバシーポリシー</a></li>
+        <!-- <li class = "foo"><a href = "{% url 'statistic_policy' %}" class = "foolink">統計方法</a></li> -->
+        <li class = "foo"><a href = "https://twitter.com/superchatrecord" class = "foolink">運営者Twitter(@superchatrecord)</a></li>
+      </div>
+  
+      <div class = "foo1">
+        このサイトについて
+      </div>
+      <div class = "foo2">
+        このサイトではYouTubeを利用している人気配信者の<br>
+        スパチャ額や登録者数を計測しています。Google inc.との関係はありません。
+      </div>
+  
+    </div>
+  </footer>
+
+</body>
+
+</html>
+

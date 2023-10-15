@@ -1,0 +1,24 @@
+<body>
+    <style>
+        body{
+            font-family:Arial;
+            margin:2rem;
+        }
+        input{
+            height:1.5rem;
+        }
+    </style>
+    <form action="{% url 'add' %}" method = "post">
+        {% csrf_token %}
+        useridを入力してください：
+        <input type="text" name="userid" required>
+        <br>
+        累計スパチャ額を入力してください：
+        <input type="text" name="superchat_total" required>
+        <br>
+        パスワードを入力してください：
+        <input type="text" name="pass" required>
+        <br>
+        <input type="submit" value ="登録">
+    </form>
+</body>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta name="robots" content="noindex">
+    </head>
+    <body>
+        <h1>{{title}}</h1>
+        <style>
+            body{
+                font-family:Arial;
+                margin:2rem;
+            }
+            input{
+                height:1.5rem;
+            }
+        </style>
+        <form action="{% url to %}" method = "post">
+            {% csrf_token %}
+            パスワードを入力してください：
+            <input type="text" name="pass" class="input" required>
+            <br>
+            並べ替え順を入力してください：
+            <input type="text" name="order" class="input" required>
+            <br>
+            期間を入力してください：
+            <input type="text" name="term" class="input" required>
+            <br>
+            指定する場合はタグを入力してください：
+            <input type="text" name="tag" class="input">
+            <br>
+            <input type="submit" class="submit" value ="Go">
+        </form>
+
+        <div>
+            <img src="">
+        </div>
+    </body>
+</html>

@@ -1,0 +1,212 @@
+{% load static %}
+<html>
+  <head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+  </head>
+  <style>
+    button {padding:30px;}
+</style>
+
+  <body>
+
+    <h1>Data from accelerometer</h1>
+      <button  onclick="requestMotionPermission();">Get permission and start sensing</button>
+      <button  onclick="stopDeviceMotion();">Stop</button>
+
+      <h2>Acceleration</h2>
+        <p> X: <span id="accel-x">0</span> </p> 
+        <p> Y: <span id="accel-y">0</span> </p> 
+        <p> Z: <span id="accel-z">0</span> </p> 
+
+      <h2>Acceleration (including gravity)</h2>
+        <p> X: <span id="accel-g-x">0</span> </p> 
+        <p> Y: <span id="accel-g-y">0</span> </p> 
+        <p> Z: <span id="accel-g-z">0</span> </p> 
+
+      <h2>Rotation rate</h2>
+        <p> Alpha: <span id="rotate-a">0</span> </p> 
+        <p> Beta: <span id="rotate-b">0</span> </p> 
+        <p> Gamma: <span id="rotate-g">0</span> </p>
+
+      <h2>CSV data from Accelerometer</h2>
+    <textarea id="acc-csv" style="width:300px;height:300px;"></textarea>
+    
+    <textarea id="csv-2" style="width:300px;height:300px;"></textarea>
+    <h2>判定:<p id="judge"></p></h2>
+
+  </body>
+
+<!--  ===========================================  -->
+<script type="text/javascript">
+alert("Welcome to sample page 4!");
+var accelerations = [];
+var ave_x = 0;
+var vari_x = 0;
+var ave_y = 0;
+var vari_y = 0;
+var min_z = 0;
+
+//////////////////////////////////////////////////////
+//Function to get sensor access permission from the browser
+//////////////////////////////////////////////////////
+function requestMotionPermission(){
+  if ( DeviceMotionEvent &&
+       typeof DeviceMotionEvent.requestPermission === 'function' ){
+      // iOS 13+ の Safari
+      // 許可を取る
+      DeviceMotionEvent.requestPermission().then(permissionState => {
+	  if (permissionState === 'granted') {
+              // 許可を得られた場合???devicemotionをイベントリスナ??に追??
+	      window.addEventListener("devicemotion", handleAcceleration, false);
+	  } else {
+              // 許可を得られなかった???合??処??
+	      console.log("Perrmission not granted!");
+	      alert("Perrmission not granted!");
+	  }
+      }).catch(console.error) // https通信でな????合などで許可を取得できなかった?????
+
+  } else {
+      //For other devices
+      console.log("detected other device. so adding listener...");
+      window.addEventListener("devicemotion", handleAcceleration, false);
+  }
+
+}
+
+function stopDeviceMotion(){ 
+    window.removeEventListener("devicemotion", handleAcceleration, false);
+}
+
+
+// ////////////////////////////////////////////////////////////////////
+// //Function(1): to handle acceleration data
+// //  - This function will be called about 10-50 times per second
+// ////////////////////////////////////////////////////////////////////
+function handleAcceleration(ev){
+    //alert("" + event.acceleration.x + " " + event.acceleration.y + " " + event.acceleration.z);
+    $('#accel-x').text( ev.acceleration.x );
+    $('#accel-y').text( ev.acceleration.y );
+    $('#accel-z').text( ev.acceleration.z );
+
+    var e_time = new Date();
+    $('#acc-csv').append(e_time.getTime() + "," + ev.acceleration.x + ","+ ev.acceleration.y + "," + ev.acceleration.z + "\n");
+
+    $('#accel-g-x').text( ev.accelerationIncludingGravity.x );
+    $('#accel-g-y').text( ev.accelerationIncludingGravity.y );
+    $('#accel-g-z').text( ev.accelerationIncludingGravity.z );
+
+    $('#rotate-a').text( ev.rotationRate.alpha );
+    $('#rotate-b').text( ev.rotationRate.beta );
+    $('#rotate-g').text( ev.rotationRate.gamma );
+
+    // 1つ追加
+    accelerations.push([ev.acceleration.x,ev.acceleration.y,ev.acceleration.z])
+    //データ配列の要素数が11以上の場合先頭のデータを削除したりもろもろ
+    if(accelerations.length >= 11)
+    {
+        accelerations.shift();
+        var xs = []
+        var ys = []
+        var zs = []
+        for(const acceleration of accelerations)
+        {
+            xs.push(acceleration[0]);
+            ys.push(acceleration[1]);
+            zs.push(acceleration[2]);
+        }
+
+        ave_x = xs.reduce(function(sum, element){
+                    return sum + element;
+                }, 0) / xs.length;
+        
+        vari_x = xs.reduce(function(sum, element){
+                    return sum + (element - ave_x)**2 ;
+                }, 0) / xs.length;
+        
+        ave_y = ys.reduce(function(sum, element){
+            return sum + element;
+        }, 0) / ys.length;
+
+        vari_y = ys.reduce(function(sum, element){
+                    return sum + (element - ave_y)**2 ;
+                }, 0) / ys.length;
+
+        min_z = zs.reduce(function(min, element){
+            if(min > element){
+                return element;
+            }
+        });
+
+        var judge;
+        if (vari_x <= 0.016418)
+        {
+           if(vari_x <= 0.000032){ judge = "put";}
+           if( vari_x > 0.000032){ judge = "stop";}
+        }
+        if (vari_x > 0.016418)
+        {
+           if(vari_x <= 1.017494){
+              if(vari_y <= 0.016409){
+                if(min_z <= -0.77777){ judge = "stop"}
+                if(min_z > -0.77777){ judge = "run"}
+              }
+              if(vari_y > 0.016409){ judge = "sumaho"}
+           }
+           if(vari_x > 1.017494){ judge = "run"}
+        }
+
+        $('#judge').text( judge );
+
+
+        $('#csv-2').append( accelerations + "\n" + 
+                          "ave_x:" + ave_x + "\n" + 
+                          "vari_x:" + vari_x + "\n" + 
+                          "min_z:" + min_z + "\n"
+                            );
+    }
+
+
+}
+
+/////////////////////////////////////////////////
+///////////////////
+//Function(2): to handle magnetometer data
+//  - This function will be called about 10-50 times per second
+////////////////////////////////////////////////////////////////////
+function handleOrientation(ev){
+    $('#ori-abs').text( ev.absolute );
+    $('#ori-a').text( ev.alpha );
+    $('#ori-b').text( ev.beta );
+    $('#ori-g').text( ev.gamma );
+
+    var e_time = new Date();
+    $('#ori-csv').append(e_time.getTime() + ", ori," + ev.absolute + "," + ev.alpha + "," + ev.beta + "," + ev.gamma + "\n");
+}
+
+</script>
+<!--  ===========================================  -->
+
+<!-- レポート
+
+氏名:津田晴慈
+所属:環境情報学部 3年
+学籍番号:72045427
+
+手順
+1.サイトから各動作の加速度データを取得
+2.Pythonでデータにラベルを付け、最大最小平均分散を10個間隔でデータ化
+3.Pythonでランダムに混ぜ、arffフォーマットに手動で変換
+4.wekaに投入し、推定木を作成
+5.jsに必要な指標(分散等)を記録し、推定木を元に判定結果をhtmlに返す部分を作成
+6.自サーバーにアップロードし動作を確認
+
+url:https://www.liverank.jp/ubiquitous_ai
+
+感想
+元となるデータに比べてモデルの方が軽いのだと思った。
+このデータ量でここまで精度が出て驚いた。
+これからの社会の重要要素になるであろう機械学習について実践的な知見を得ることができて有意義な機会だった。 -->
+
+
+</html>

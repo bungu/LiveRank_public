@@ -1,0 +1,78 @@
+/* Custom CSS */
+body {
+    background-color: #f8f6f6;
+}
+h5 {
+    color: #097457;
+}
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+.arrow {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 1.5em;
+    transition: all 0.3s ease-in-out;
+}
+.arrow:hover {
+    transform: translateX(10px);
+}
+.batsu {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+}
+
+.batsu::before, .batsu::after { /* 共通設定 */
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px; /* 棒の幅（太さ） */
+    height: 30px; /* 棒の高さ */
+    background: #097457;
+    border-radius: 2.5px;
+}
+
+.batsu::before {
+    transform: translate(-50%,-50%) rotate(45deg);
+}
+
+.batsu::after {
+    transform: translate(-50%,-50%) rotate(-45deg);
+}
+
+.stylish-button {
+    background-color: #4f9c62; /* Green */
+    border: none;
+    color: white;
+    padding: 7px 14px; /* Adjust size by modifying padding */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px; /* Adjust font size */
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px; /* Make corners round */
+}
+
+.stylish-button:hover {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #4CAF50;
+}
+
+.chatgpt-message{
+    color: blue;
+}
+
+.user-message{
+    color: rgb(244, 14, 14);
+}

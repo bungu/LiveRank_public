@@ -1,0 +1,65 @@
+{% load static %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> ツイート診断 </title>
+        <link rel="stylesheet" href="{% static 'css/result_stylesheet.css' %}">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Dela+Gothic+One&family=Delius+Unicase:wght@700&family=Hachi+Maru+Pop&family=Oswald:wght@500&family=Press+Start+2P&family=Rampart+One&family=Shippori+Mincho&family=Vast+Shadow&family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <!-- TODO タイトルいい感じに -->
+        <meta property="og:title" content="ツイート診断" />
+        <meta property="og:type" content="article" />
+        <meta property="og:description" content='Your Type Is "{{type_dic_Ad}}{{type_dic_Noun}}"' />
+        <meta property="og:image" content="https://{{ request.META.HTTP_HOST }}{%static ogp_img %}"/>
+        <!-- TODO URLはトップ固定で良いか -->
+        <meta property="og:url" content="https://{{ request.META.HTTP_HOST }}"/>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LNFTBBCM8R"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LNFTBBCM8R');
+        </script>
+
+        <!-- faviconをstaticから配置 -->
+        <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    </head>
+
+    <body>
+        <div class="header">
+            
+        </div>
+        <div class="main">
+            <h2 class="sub">Your Type Is</h2>
+            <h2>
+                <ruby>
+                    <rb>{{type_dic_Ad}}{{type_dic_Noun}}</rb>
+                    <rp>（</rp><rt>{{type_dic_en}}</rt><rp>）</rp>
+                </ruby>
+            </h2>
+            <h2 class="me">{{type_dic_message}}</h2>
+
+            <img src="{%static img %}" alt="">
+
+        </div>
+        <div class="fotter">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" 
+            class="twitter-share-button" 
+            data-text="Your Type Is 「{{type_dic_Ad}}{{type_dic_Noun}}」. {{type_dic_message}}"
+            data-hashtags="ツイート判定"
+            data-show-count="false">Tweet</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <a href="/tweet_diagnose/information">プライバシー/著作権について</a>
+        </div>
+        
+    </body>
+</html>

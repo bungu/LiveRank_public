@@ -1,0 +1,21 @@
+
+/* 以下本文 */
+
+.h1{
+    text-align: center;
+    margin-top:5rem;
+    margin-bottom: 2rem;
+    font-size:3rem;
+    font-weight: bold;
+}
+
+.main{
+    margin:0 4rem 0 4rem;
+    font-size:1.5rem;
+}
+
+@media (min-width:800px) {
+    .main{
+      margin:0 calc((100vw - 700px)/ 2) 0 calc((100vw - 700px)/ 2);
+    }
+  }

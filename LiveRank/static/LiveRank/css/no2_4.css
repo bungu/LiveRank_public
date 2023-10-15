@@ -1,0 +1,756 @@
+div.h{
+    background-color:#EAEAEA;
+  }
+
+body{
+  width:42rem;
+  margin:0;
+}
+  
+  /* 見出し全体 */
+  @media  (max-width:375px){
+    div.h{
+      margin:4rem 0 0 0;
+      padding:2.3rem 1.8rem 2.3rem 1.8rem;
+    }
+  
+    /* div.radio{
+      margin-left:1.4rem;
+    } */
+  }
+  
+  @media (min-width:376px) and (max-width:939px) {
+    div.h{
+      margin:4rem 0 0 0;
+      padding:2.3rem 2rem 2.3rem 2rem;
+    }
+    /* div.radio{
+      margin-left:1.8rem;
+    } */
+  }
+  
+  @media (min-width:940px){
+    div.h{
+      margin:4rem 0 0 0;
+      padding:2.3rem 4rem 2.3rem 4rem;
+    }
+    /* div.radio{
+      margin-left:1.8rem;
+    } */
+  }
+  
+  
+  h1{
+    padding:0;
+    margin:0 0 0 0;
+  
+    /* border-left-style: solid;
+    border-left-color: #DE9000;
+    border-left-width: 0.6rem; */
+  
+    line-height: 3.5rem;
+    font-size:2.3rem;
+  }
+  
+  h1 span{
+    font-family:sans-serif;
+    font-weight:600;
+  }
+  
+  @media (max-width:549px){
+    div.tag_h1{
+    display:block;
+  }
+  }
+  
+  @media (min-width:550px){
+    div.tag_h1{
+    display:inline;
+  }
+  }
+  
+  .linktotop{
+    top: 0;
+    left: 0;
+    height: 100%;
+    width:100%;
+    position:absolute;
+    color:black;
+    text-decoration: underline;
+  }
+  
+  .daynumber{
+    font-size:2.5rem;
+  }
+  
+  div.h2{
+    font-size:1.2rem;
+    font-weight: normal;
+  }
+  
+  .h2 a{
+    position:relative;
+    color:black;
+  }
+  
+  /* 絞り込み */
+  
+  @media (max-width:1049px){
+  
+    div.filter{
+      display:none;
+      position:fixed;
+      top:5.4rem;
+      width:100%;
+      z-index:100;
+      font-size:1.25rem;
+    }
+  
+    #filter:checked ~ div.filter{
+      display:block
+    }
+  
+    .filter_check{
+      display:none;
+    }
+  
+    label.filter_button{
+      display:block;
+  
+      font-size:1.2rem;
+      font-weight:bold;
+      color:white;
+      text-align: center;
+      /* font-family: "YuGothic"; ←なんかスマホだと効かない*/
+  
+      background-color: #DE9000;
+      width:16.8rem;
+      padding:1.2rem 0;
+      margin:2rem 2.3rem 0.2rem 2.2rem;
+      border-radius: 7px;
+    }
+  
+    div.filter_h{
+      background-color: white;
+      color:black;
+      border-bottom: #A7A7A7 solid 1.5px;
+      font-weight: bold;
+      padding: 1.8rem 0 1.8rem 1.8rem;
+    }
+  
+    div.filter_choices{
+      background-color: #EFEFEF;
+      border-bottom: #A7A7A7 solid 0.5px;
+    }
+  
+    div.filter_h2{
+      font-weight: bold;
+      padding-bottom:1rem;
+      padding-top: 1.3rem;
+    }
+  
+    div.checks_flex{
+      display: flex;
+      flex-wrap: wrap;
+    }
+  
+    label.filter_mainlabel{
+      margin-bottom:1.3rem;
+      width:auto;
+    }
+  
+    div.filter_kind{
+      font-family: sans-serif;
+      padding-left:1.9rem;
+      border-bottom: #A7A7A7 solid 1px;
+    }
+  
+    input[type="checkbox"].filter_check_{
+      display:none;
+    }
+  
+    label.filter_text{
+      display:inline;
+      padding-right:2.2rem;
+      position: relative;
+      top: -0.2rem;
+    }
+  
+    input[type="checkbox"].filter_check_ + label.checkbox_img{
+      display:inline;
+      background-image: url(/LiveRank/static/LiveRank/img/checkbox_off.png);
+      background-repeat: no-repeat;
+      background-size: 1.5rem;
+      background-position: 0 0.5rem;
+      padding:1rem 2.2rem 0 0;
+    }
+  
+    input[type="checkbox"]:checked.filter_check_ + label.checkbox_img{
+      background-image: url(/LiveRank/static/LiveRank/img/checkbox_on.png);
+    }
+  
+    input.filter_submit{
+      display:none;
+    }
+  
+    label.filter_submit{
+      background-color: #DE9000;
+      color: #FFFFFF;
+      font-weight: bold;
+      padding:1.1rem 0;
+      text-align: center;
+      border-radius: 7px;
+    }
+  
+    div.white{
+      background-color: white;
+      padding:1.4rem 3.2rem;
+    }
+  
+    img.close{
+      width:2.1rem;
+      text-align:center;
+      position: relative;
+      top:0.5rem;
+      display: block;
+      margin: 0 auto;
+    }
+  
+    div.filter_back{
+      position:fixed;
+      display:none;
+      background-color:rgba(64,63,63,0.37);
+      z-index:99;
+      width:100%;
+      height:100%;
+      top:0;
+    }
+  
+    #filter:checked ~ div.filter_back{
+      display:block;
+  
+    }
+  }
+  
+  @media (min-width:1050px){
+  
+    .filter_check{
+      display:none;
+    }
+  
+    label.filter_button{
+      display:block;
+  
+      font-weight:bold;
+      color:white;
+      text-align: center;
+      /* font-family: "YuGothic"; ←なんかスマホだと効かない*/
+  
+      background-color: #DE9000;
+      font-size:1.3rem;
+      width:16.8rem;
+      padding:1.2rem 0;
+      margin:2rem 2.3rem 0.2rem 2.2rem;
+      border-radius: 7px;
+    }
+  
+    div.filter{
+      display:none;
+      position:fixed;
+      top:5.4rem;
+      width:100%;
+      z-index:100;
+    }
+  
+    #filter:checked ~ div.filter{
+      display:block
+    }
+  
+    div.filter_h{
+      background-color: white;
+      color:black;
+      border-bottom: #A7A7A7 solid 1.5px;
+      font-weight: bold;
+      font-size: 1.3rem;
+      padding: 1.8rem 0 1.8rem 1.8rem;
+    }
+  
+    div.filter_choices{
+      background-color: #EFEFEF;
+      border-bottom: #A7A7A7 solid 0.5px;
+    }
+  
+    div.filter_h2{
+      font-size: 1.3rem;
+      font-weight: bold;
+      padding-bottom:1rem;
+      padding-top: 1.3rem;
+    }
+  
+    div.checks_flex{
+      display: flex;
+      flex-wrap: wrap;
+    }
+  
+    label.filter_mainlabel{
+      margin-bottom:1.3rem;
+      width:auto;
+    }
+  
+    div.filter_kind{
+      font-family: sans-serif;
+      padding-left:1.9rem;
+      border-bottom: #A7A7A7 solid 1px;
+    }
+  
+    input[type="checkbox"].filter_check_{
+      display:none;
+    }
+  
+    label.filter_text{
+      font-size:1.3rem;
+      display:inline;
+      padding-right:2.2rem;
+      position: relative;
+      top: -0.2rem;
+    }
+  
+    input[type="checkbox"].filter_check_ + label.checkbox_img{
+      display:inline;
+      background-image: url(/LiveRank/static/LiveRank/img/checkbox_off.png);
+      background-repeat: no-repeat;
+      background-size: 1.5rem;
+      background-position: 0 0.5rem;
+      padding:1rem 2.2rem 0 0;
+    }
+  
+    input[type="checkbox"]:checked.filter_check_ + label.checkbox_img{
+      background-image: url(/LiveRank/static/LiveRank/img/checkbox_on.png);
+    }
+  
+    input.filter_submit{
+      display:none;
+    }
+  
+    label.filter_submit{
+      background-color: #DE9000;
+      color: #FFFFFF;
+      font-size: 1.3rem;
+      font-weight: bold;
+      padding:1.1rem 0;
+      text-align: center;
+      border-radius: 7px;
+    }
+  
+    div.white{
+      background-color: white;
+      padding:1.4rem 3.2rem;
+    }
+  
+    img.close{
+      width:2.1rem;
+      text-align:center;
+      position: relative;
+      top:0.5rem;
+      display: block;
+      margin: 0 auto;
+    }
+  
+    div.filter_back{
+      position:fixed;
+      display:none;
+      background-color:rgba(64,63,63,0.37);
+      z-index:99;
+      width:100%;
+      height:100%;
+      top:0;
+    }
+  
+    #filter:checked ~ div.filter_back{
+      display:block;
+  
+    }
+  }
+  
+  /* ラジオボタン */
+  
+  .form{
+    padding-bottom:0.5rem;
+    padding-left:0.5rem;
+  }
+  
+  
+  
+  img.radio{
+    position: relative;
+    top: 0.32rem;
+    z-index:0;
+    width:1.6rem;
+    margin-right:0.4rem;
+    margin-left: 0.2rem;
+  }
+  
+  .radiolink{
+    text-decoration: none;
+    color:black;
+    display:block;
+    position:relative;
+    z-index:10;
+  }
+  
+  div.radio{
+    display:flex;
+    font-size: 1.2rem;
+    position:relative;
+    top:1.7rem;
+    left:0.3rem; 
+  }
+  
+  div.radiochil{
+    margin-right:1.2rem;
+  }
+  
+  div.radiotext{
+    top:-0.1rem;
+  }
+  
+  .sort-s{
+    margin-right:0.7rem;
+  }
+  
+  /* ここから期間選択タブ */
+  
+  .termtab{
+    display:flex;
+    height:3rem;
+    border: 1px solid #DE9000;
+  }
+  
+  .extention{
+    width:0.85rem;
+    height:auto;
+    display:block;
+    padding-bottom:0.6rem;
+    padding-right:0.36rem;
+  }
+  
+  .termtab a{
+    width:calc(100% /3);
+  }
+  
+  a.weekly,a.daily,a.total{
+    text-decoration: none;
+  }
+  
+  div.weekly{
+    display:flex;
+    align-items: flex-end;
+    height:1.2rem;
+    font-size:1.2rem;
+    padding-top:1.4rem;
+    padding-bottom:0.4rem;
+    justify-content: center;
+    border-right: 1px solid #DE9000;
+    text-decoration: none;
+  }
+  
+  div.total{
+    display:flex;
+    align-items: flex-end;
+    height:1.2rem;
+    font-size:1.2rem;
+    padding-top:1.4rem;
+    padding-bottom:0.4rem;
+    justify-content: center;
+  }
+  
+  div.daily{
+    display:flex;
+    align-items: flex-end;
+    height:1.2rem;
+    font-size:1.2rem;
+    padding-top:1.4rem;
+    padding-bottom:0.4rem;
+    justify-content: center;
+    border-left: 1px solid #DE9000;
+    text-decoration: none;
+  }
+  
+  /* ここからライバー情報(table) */
+  
+  table{
+    table-layout: fixed;
+  }
+  
+  time{
+    display:block;
+    text-align: right;
+    font-size:1.2rem;
+    color:#888888;
+    margin-bottom:0.3rem;
+  }
+  
+  td{
+    border-bottom: 0.5px solid #DFDFDF;
+  }
+  
+  td.liver{
+    display:flex;
+    position:relative;
+  }
+  
+  .liver-data{
+    display: table;
+    box-sizing: border-box;
+    max-width: calc(100vw - 128px);
+  }
+  
+  ul{
+    display: table-cell;
+    vertical-align: middle;
+    overflow-wrap: break-word;
+  }
+  
+  /* 謎 */
+  @media (max-width:749px){
+    .rank-number{
+      padding-left:calc((100vw - 600px)/2);
+    }
+  
+    table{
+      width:100%;
+    }
+  
+    td{
+      width:100%;
+    }
+  
+    div.paginator{
+      margin-left:1rem;
+    }
+  
+  }
+  
+  /* 375-750までの時のtableの空白のレスポンシブ
+  @media (min-width:375px) and (max-width:749px){
+    .rank-number,.paginator{
+      padding-left:calc((100vw - 600px)/2);
+    }
+  
+    .paginator{
+      padding-right:calc((100vw - 600px)/2);
+    }
+  
+    .liver-data{
+      padding-right:calc((100vw - 400px)/2);
+    }
+  } */
+  
+  /* 750以上の時に2段に変える */
+  @media (min-width:750px) { /*ウィンドウ幅が(N)px以上の場合に適用*/
+    td.liver{
+      width:50%;
+    }
+    .rank-number{
+      padding-left:0;
+    }
+    .liver-data{
+      padding-right:0;
+    }
+    tr{
+      display:flex;
+      width:100%;
+    }
+    table{
+      width:100%;
+    }
+    .h{
+      margin-left:40px
+    }
+  }
+  
+  /* 750-899の時に画面いっぱいにtableを表示 */
+  @media  (max-width:899px){
+    table{
+      width:100%;
+    }
+    .ad2{
+      margin-left:2rem;
+    }
+  }
+  
+  /* 900-979の時の横の空白の長さ */
+  @media (min-width:900px) and (max-width:979px){ /*ウィンドウ幅が(N)px以上の場合に適用*/
+    div.choice_big,table,label.filter_button,.paginator,.tag_notice,.ad2{
+      margin-right: Calc((100vw - 900px)/2);
+      margin-left: Calc((100vw - 900px)/2);
+    }
+  
+    table{
+      width:900px;
+    }
+  
+  }
+  
+  /* 980-の時の横の空白の長さ */
+  @media (min-width:980px){ /*ウィンドウ幅が(N)px以上の場合に適用*/
+    div.choice_big,table,label.filter_button,.paginator,.tag_notice,.ad2{
+      margin-right: Calc(100vw - 940px);
+      margin-left: 40px;
+    }
+  
+    .termtab,table{
+      width:900px;
+    }
+  }
+  
+  
+  .rank-number{
+    text-align: center;
+    font-weight:bold;
+    font-size:1.85rem;
+    width:4rem;
+    line-height: 10.3rem;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%); /* Safari用 */
+    transform: translateY(-50%);
+  }
+  
+  .liver-img-div{
+    position:relative;
+  }
+  
+  .liver-img{
+    position:relative;
+    width:9.2rem;
+    top: 50%;
+    -webkit-transform: translateY(-50%); /* Safari用 */
+    transform: translateY(-50%);
+  }
+  
+  li{
+    list-style: none;
+    position: relative;
+    overflow-wrap: normal;
+  }
+  
+  .name{
+    font-weight:bold;
+    font-size:1.8rem;
+    position: relative;
+    top: 0.1rem;
+    margin:1.5rem 1.1rem 0.4rem 0;
+    overflow-wrap: normal;
+  }
+  
+  .subscriber{
+    font-family: "Roboto Mono";
+    font-weight: normal;
+    font-size:1.45rem;
+  }
+  
+  span{
+    font-family: "Roboto Mono";
+  }
+  
+  .superchat{
+    font-family: "Roboto Mono";
+    font-weight: normal;
+    font-size:1.45rem;
+  }
+  
+  img.smallyen,img.smallperson{
+    position: relative;
+  }
+  
+  img.smallyen{
+    width:1.5rem;
+    top:0.2rem;
+    right:0.1rem
+  }
+  
+  img.smallperson{
+    width:1.3rem;
+    margin-right:0.2rem;
+    top:0.25rem;
+  }
+  
+  .tag{
+    float:left;
+    font-size:0.75rem;
+    font-family:sans-serif;
+    margin: 0.48rem 0.9rem 1.4rem 0;
+    padding: 0.29rem 0.46rem;
+    color:#727272;
+    background: #EAEAEA;
+    /* ↓リンクにするため */
+    position:relative;
+  }
+  
+  .tag:hover{
+    background: navajowhite;
+  }
+  
+  .tag_notice{
+    font-size: 1.1rem;
+    color: #777777;
+  }
+  
+  /* ページネーター */
+  
+  .paginator{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top:2rem;
+    margin-bottom:3rem;
+    font-family: system-ui;
+  }
+  
+  .paginatorlink div{
+    display: flex;
+    height:100%;
+    margin:0 1rem;
+  }
+  
+  .paginatorlink{
+    color:black;
+    text-decoration: underline;
+    font-size: 1.8rem;
+  }
+  
+  .paginator_bold{
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  div.next{
+    position:relative;
+    font-size:1.5rem;
+    color:black;
+    text-decoration: none;
+  }
+  
+  @media (min-width:1200px){
+    .ad{
+      position:absolute;
+      right:4rem;
+      background:#F0F0F0;
+      width:calc(100vw - 1020px);
+      top:27.4rem;
+      height:100%;
+    }
+  }
+  
+  div.ad2_text{
+    position:relative;
+    top:0;
+    right:0;
+    color:#999999;
+  }
+
+div.sansho{
+  font-size:0.6rem;
+  text-align: right;
+  margin:0 0.2rem 0.2rem 0;
+}

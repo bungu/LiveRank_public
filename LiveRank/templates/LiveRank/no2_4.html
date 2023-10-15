@@ -1,0 +1,109 @@
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'LiveRank/css/no2_4.css' %}"/>
+  <link href="{% static 'LiveRank/css/fonts.css' %}" rel="stylesheet"> 
+  <link href="{% static 'LiveRank/css/shared.css' %}" rel="stylesheet"> 
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"> 
+  <meta name="robots" content="noindex">
+</head>
+
+<body style="padding:0;">
+
+  <!-- <Header style="width:40rem;">
+    <div class="header-color">
+      <div class = "menu">
+        <label for="hum">
+          <img src="{% static 'LiveRank/img/MENU.png' %}" class="menu" alt="メニュー">
+          <div class="menutext">MENU</div>
+        </label>
+      </div>
+      <div class="header-logo">
+        <a href = "{% url 'ranking_top' %}" class="headerlink">
+          <img src="{% static 'LiveRank/img/sitelogo.png' %}" class="header-logo" alt="ライブランク！"></a>
+      </div>
+      <div class="search">
+        <label for="search_check">
+          <img src="{% static 'LiveRank/img/Search.png' %}" class="search" alt="サイト内検索">
+          <div class="searchtext">検索</div>
+        </label>
+      </div>
+    </div>
+  </Header> -->
+
+  <article>
+
+  <!-- ここから本テーブル -->
+
+  <table class="table">
+  {% for liver in data %}
+    {% if forloop.counter|mod:2 == 1 %}
+    <tr class="liver">
+      <td class="liver">
+    {% else %}
+      <td class="liver">
+    {% endif %}
+        <div><div class="rank-number">{{forloop.counter|addition:ranking_addition_number}}</div></div>
+        <div class="liver-img-div" style="width:8.8rem;"><img src="{{liver.img}}"class="liver-img" alt="{{liver.name}}"><a href= "{% url 'liver' liver.userid %}" class="link"></a></div>
+        <div class="liver-data">
+          <ul>
+            <li class="name">{{liver.name}}<a href= "{% url 'liver' liver.userid %}" class="link"></a></li>
+
+            {% if order == "subscriber" %}
+              {% if term == "total" %}
+              <li class="subscriber"><img src="{% static 'LiveRank/img/smallperson.png' %}" alt="チャンネル登録者数" class="smallperson"><span> {{liver.subscriber_total|div:10000}}</span>万人<a href= "{% url 'liver' liver.userid %}" class="link"></a></li>
+              {% elif term == "weekly" %}
+              <li class="subscriber"><img src="{% static 'LiveRank/img/smallperson.png' %}" alt="チャンネル登録者数" class="smallperson"><span> +{{liver.subscriber_weekly|div:10000}}</span>万人 /週<a href= "{% url 'liver' liver.userid %}" class="link"></a></li>
+              {% elif term == "daily" %}
+              <li class="subscriber"><img src="{% static 'LiveRank/img/smallperson.png' %}" alt="チャンネル登録者数" class="smallperson"><span> +{{liver.subscriber_daily|intcomma}}</span>人 /日<a href= "{% url 'liver' liver.userid %}" class="link"></a></li>
+              {% elif term == "monthly" %}
+              <li class="subscriber"><img src="{% static 'LiveRank/img/smallperson.png' %}" alt="チャンネル登録者数" class="smallperson"><span> +{{liver.subscriber_monthly|intcomma}}</span>人 /月<a href= "{% url 'liver' liver.userid %}" class="link"></a></li>
+              {% endif %}
+            {% endif %}
+
+            {% if order == "superchat" %}
+              {% if term == "total" %}
+              <li class="superchat"><img src="{% static 'LiveRank/img/smallyen.png' %}" alt="スーパーチャット,スパチャ" class="smallyen">
+              {{liver.superchat_total | intcomma}}円<a href= "{% url 'liver' liver.userid %}" class="link"></a></li>
+              {% elif term == "weekly" %}
+              <li class="superchat"><img src="{% static 'LiveRank/img/smallyen.png' %}" alt="スーパーチャット,スパチャ" class="smallyen">
+                {{liver.superchat_weekly | intcomma}}円 /週<a href= "{% url 'liver' liver.userid %}" class="link"></a></li>
+              {% elif term == "daily" %}
+              <li class="superchat"><img src="{% static 'LiveRank/img/smallyen.png' %}" alt="スーパーチャット,スパチャ" class="smallyen">
+                +{{liver.superchat_daily | intcomma}}円 /日<a href= "{% url 'liver' liver.userid %}" class="link"></a></li>
+              {% elif term == "monthly" %}
+              <li class="superchat"><img src="{% static 'LiveRank/img/smallyen.png' %}" alt="スーパーチャット,スパチャ" class="smallyen">
+                +{{liver.superchat_monthly | intcomma}}円 /月<a href= "{% url 'liver' liver.userid %}" class="link"></a></li>
+              {% endif %}
+            {% endif %}
+
+            <li class="tags">
+              {% for tag_object in liver.tags.all %}
+              <div class="tag">
+                {{tag_object.tag_name}}
+                <a href= "{% url 'tag_ranking' order term tag_object.tag_name '1' %}" class="link"></a>
+              </div>
+              {% endfor %}
+            </li>
+          </ul>
+        </div>
+      </td>
+    {% if forloop.counter|mod:2 == 0 %}
+    </tr>
+    {% elif forloop.last %}
+    </tr>
+    {% endif %}
+  {% endfor %}
+  </table>
+
+  <!-- ここから変数で分岐する系のスタイルシート -->
+  </article>
+
+</body>
+
+</html>
+

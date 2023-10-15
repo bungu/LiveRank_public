@@ -1,0 +1,77 @@
+body {
+    background-color: rgb(83,119,122);
+    background-position: center;
+
+}
+
+.main{
+    text-align: center;
+    background-color:rgb(236,208,120); 
+    height: 530px;
+    margin-top: 50px;
+}
+
+
+.main h1{
+    font-size: 3em;
+    font-family: 'Bungee Shade', cursive;
+    color:rgba(62, 24, 24, 0.64);
+    letter-spacing: 0.2em;
+    position: relative; 
+    left:0px;
+    margin-top: 0px; 
+    line-height: 1;  
+    margin-bottom: 0px;
+}
+
+.main .first{
+    left: 5px;
+}
+
+
+.main h2{
+    position: relative;  
+    font-size: 1.5em;
+    font-family: 'Shippori Mincho', serif;
+}
+
+/*
+.main img{
+    width: 160px;
+    height: 160px;
+    margin-top: 50px;
+
+}
+*/
+
+.main button{
+    flex-direction:row;
+    justify-content:center;
+    align-self:center;
+    background:transparent;
+    padding:1rem 1rem;
+    transition:all .5s ease;
+    font-size:2rem;
+    letter-spacing:1px;
+    outline:none;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+    box-shadow:2px 8px 4px -6px hsla(0,0%,0%,.3);
+    border:solid 7px #41403E;
+    margin:0 auto;
+    display:block;
+    background-color: rgb(217,91,67);
+    color: rgb(236,208,120);
+    margin-top: 60px;
+    font-family: 'Bungee Shade', cursive;
+    height: 100px;
+}
+
+.main .pri:hover{
+    margin-top: 70px;
+}
+
+
+.fotter{
+    color:rgb(84,36,55);
+    
+}

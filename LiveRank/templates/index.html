@@ -1,0 +1,120 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <div class="container">
+        <!-- New Chat Session button -->
+        
+        <div class="container">
+            <form method="POST" class="my-5">
+                {% csrf_token %}
+                <div class="form-group">
+                    {% for field in form %}
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        <textarea class="form-control {% if field.errors %}is-invalid{% endif %}"
+                                  id="{{ field.id_for_label }}"
+                                  name="{{ field.html_name }}"
+                                  rows="3">{{ new_session|yesno:"=== ＃役割 ... ===, " }}{{ field.value|default_if_none:'' }}</textarea>
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% for error in field.errors %}
+                            <div class="invalid-feedback">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-primary">ChatGPT</button>
+            </form>
+    
+            <a href="{% url 'start_new' %}" class="btn btn-secondary mb-3">New Session</a>
+    
+
+        <!-- Current Chat Session -->
+        {% for session in sessions reversed %}
+            {% if session.id == request.session.active_chat_session_id %}
+                <h5>Previous session (Session ID: {{ session.id }}): 
+                    <span class="batsu" onclick="confirmDelete('session-{{ session.id }}')"></span>
+                </h5>
+                <div class="pl-3">
+                    {% for message in session.messages.all reversed %}
+                        <p>
+                            <strong>
+                                {% if message.by_user %}
+                                    <span class = "user-message">{{ message.created_at }} by User</span>
+                                {% else %}
+                                    <span class = "chatgpt-message">{{ message.created_at }} by ChatGPT</span>
+                                {% endif %}
+                            </strong>: 
+                            {% if message.by_user %}
+                                <span class="short">{{ message.content|slice:":15" }}</span>
+                                <span class="full" style="display: none;">{{ message.content|linebreaksbr }}</span>
+                                {% if message.content|length > 15 %}
+                                    <button class="read-more stylish-button">Read More</button>
+                                {% endif %}
+                            {% else %}
+                                <span class="chatgpt-response">{{ message.content|linebreaksbr }}</span>
+                            {% endif %}
+                        </p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Previous Chat Sessions -->
+        {% for session in sessions reversed %}
+            {% if session.id != request.session.active_chat_session_id %}
+                <h5>Previous session (Session ID: {{ session.id }}): 
+                    <span class="arrow" onclick="toggleSession('session-{{ session.id }}')">&rarr;</span>
+                    <span class="batsu" onclick="confirmDelete('session-{{ session.id }}')"></span>
+                    <div id="confirm-delete-box" style="display:none;">
+                        <p>Are you sure you want to delete this session?</p>
+                        <button class="yes-button">Yes</button>
+                        <button class="no-button">No</button>
+                    </div>
+                </h5>
+                <div id="session-{{ session.id }}" class="pl-3 session-content">
+                    {% for message in session.messages.all reversed %}
+                        <p>
+                            <strong>
+                                {% if message.by_user %}
+                                     <span class="user-message">{{ message.created_at }} by User</span>
+                                {% else %}
+                                    <span class = "chatgpt-message">{{ message.created_at }} by ChatGPT</span>
+                                {% endif %}
+                            </strong>: 
+                            {% if message.by_user %}
+                                <span class="short">{{ message.content|slice:":15" }}</span>
+                                <span class="full" style="display: none;">{{ message.content|linebreaksbr }}</span>
+                                {% if message.content|length > 15 %}
+                                    <button class="read-more stylish-button">Read More</button>
+                                {% endif %}
+                            {% else %}
+                                <span class="chatgpt-response">{{ message.content|linebreaksbr }}</span>
+                            {% endif %}
+                        </p>
+                    
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'scripts.js' %}"></script>
+</body>
+
+</html>

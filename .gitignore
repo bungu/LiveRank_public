@@ -1,0 +1,9 @@
+__pycache__
+db.sqlite3
+.DS_Store
+local_settings.py
+**.env
+/0_tweet_img/
+/0_kiroku/
+/media/
+/past_scripts/

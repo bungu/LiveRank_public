@@ -1,0 +1,85 @@
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> ツイート診断 </title>
+        <link rel="stylesheet" href="{% static 'css/information.css' %}">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Dela+Gothic+One&family=Delius+Unicase:wght@700&family=Hachi+Maru+Pop&family=Press+Start+2P&family=Rampart+One&family=Shippori+Mincho&family=Vast+Shadow&display=swap" rel="stylesheet">
+        <!-- faviconをstaticから配置 -->
+        <link href="{% static 'img/favicon.ico' %}" rel="icon">
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LNFTBBCM8R"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LNFTBBCM8R');
+        </script>
+    </head>
+        
+
+    <body>
+        <div class="header">
+            
+        </div>
+
+        <div class="main">
+            <div class="docs">
+                <div class="item"> 
+                    <p>プライバシーについて</p>
+                    <div class="content">
+                    本アプリケーションは、ユーザー個人の分類結果の表示のためだけにユーザーのツイッターのツイートデータ最大過去100件を利用します。
+                    本アプリケーションはあなたのTwitterへの書き込み権限を要請しません。具体的に要請する権限は、twitter.readおよびusers.write権限です。
+                    これらの権限はあなたのアカウントを判定する際のAPI GET /2/users/me および GET /2/users/:id/tweets を使うための最低限の権限です。
+                    <br>
+                    詳細は
+                    Twitter社のAPIの権限 <a href="https://developer.twitter.com/en/docs/authentication/oauth-2-0/authorization-code">https://developer.twitter.com/en/docs/authentication/oauth-2-0/authorization-code</a>および
+                    Twitter社のAPIリファレンス<a href="https://developer.twitter.com/en/docs/api-reference-index">https://developer.twitter.com/en/docs/api-reference-index</a>をご覧ください。
+                    <br>
+                    本アプリケーションは、判定終了またはブラウザを閉じるなどしてセッションが終了すると同時にあなたのTwitterへのアクセスができなくなる仕様です。
+                    本アプリは永久にアクセスする権限は与えられていません。ツイッター社の使用により2時間アクセスが可能となっていますが、
+                    アプリケーション側でサーバーのメモリからアクセストークンを消去しています。
+                    <br>
+                    Twitterへのアクセスについて確認したい時は、ツイッター公式ページ <a href="https://twitter.com/settings/your_twitter_data">https://twitter.com/settings/your_twitter_data</a>
+                    よりご確認いただくのが確実です。
+                    なお、これらの情報はアクセス可能となると技術的には本アプリサーバーへのツイートの保存も可能ですが、現在いかなるツイートデータも保存しないことをお約束いたします。
+                    <br>
+                    なお、より精度の高い結果を表示するため、今後プロフィールのテキスト及びツイートデータなどを個人が特定できない形で精度改善のために取り入れる場合があります。
+                    その場合は本ページを改訂いたします。その場合においても過去にアクセスをしていたユーザーの情報は消失していますので、精度改善に取り入れられることはありません。
+                    </div>
+                    <p class="date">2022/9/24 作成</p>
+                </div>
+                <div class="item"> 
+                    <p>使用画像について</p>
+                    <div class="content">
+                    使用されている画像には「ダ鳥獣ギ画」様のイラストが含まれます。
+                    利用は規約<a href="https://chojugiga.com/terms/">https://chojugiga.com/terms/</a>に沿っています。
+                    </div>
+                    <p class="date">2022/9/24 作成</p>
+                </div>
+                <div class="item"> 
+                    <p>利用規約</p>
+                    <div class="content">
+                    本アプリケーションの精度は保証致しかねます。
+                    <br>
+                    本アプリケーションは不特定の又は特定の個人、団体に不快な思いをさせることを意図していません。
+                    <br>
+                    本アプリケーションは良心に基づいて利用してください。
+                    <br>
+                    本アプリケーションの利用によって生じた結果については全て利用者本人に帰属します。
+                    </div>
+                    <p class="date">2022/9/24 作成</p>
+            </div>
+        </div>
+        </div>
+
+        <div class="fotter">
+         
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,64 @@
+{% load static %}
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ツイート診断 </title>
+        <link rel="stylesheet" href="{% static 'css/stylesheet.css' %}">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Dela+Gothic+One&family=Delius+Unicase:wght@700&family=Hachi+Maru+Pop&family=Press+Start+2P&family=Rampart+One&family=Shippori+Mincho&family=Vast+Shadow&display=swap" rel="stylesheet">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <!-- TODO タイトルいい感じに -->
+        <meta property="og:title" content="ツイート診断" />
+        <meta property="og:type" content="website" />
+        <meta property="og:description" content="あなたのツイートを診断します。" />
+        <meta property="og:image" content="https://{{ request.META.HTTP_HOST }}/static/img/ogp/top.png"/>
+        <meta property="og:url" content="https://{{ request.META.HTTP_HOST }}"/>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LNFTBBCM8R"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-LNFTBBCM8R');
+        </script>
+
+        <!-- faviconをstaticから配置 -->
+        <link href="{% static 'img/favicon.ico' %}" rel="icon">
+
+    </head>
+        
+
+    <body>
+        <div class="header">
+            
+        </div>
+
+        <div class="main">
+            
+            <h1 class="first">Twitter</h1>
+            <h1 class="second">Personality</h1>
+            <h1 class="third">Test</h1>
+            
+            <h2>あなたのツイートを診断します。</h2>
+            
+            <button type=“button” onclick="location.href='{{twitter_auth_uri}}'" class="pri">START</button>
+            
+        </div>
+
+        <div class="fotter">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" 
+            class="twitter-share-button" 
+            data-hashtags="ツイート判定"
+            data-show-count="false">Tweet</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            <a href="/tweet_diagnose/information">プライバシー/著作権について</a>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,134 @@
+{% load static %}
+<html>
+  <head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  </head>
+  <style>
+    button {padding:30px;}
+</style>
+
+  <body style="background-color: #f8f6f6;">
+    <div class="container my-5">
+      <h1>{{ part_jap }}  測定ページ</h1>
+
+      <h3>現在時間</h3>
+      <h1 id="now"></h1>
+      <h3>計測開始予定時間</h3>
+      <h1>{{user.start_time|date:"Y m/d h:i:s"}}</h1>
+  
+        <button  onclick="requestMotionPermission();">Get permission and start sensing</button>
+        <button  onclick="stopDeviceMotion();">Stop</button>
+  
+        <div class="fs-4">Acceleration</div>
+          <p> X: <span id="accel-x">0</span> </p> 
+          <p> Y: <span id="accel-y">0</span> </p> 
+          <p> Z: <span id="accel-z">0</span> </p> 
+  
+        <div class="fs-4">Number of data from Accelerometer</h2>
+      <!-- <textarea id="acc-csv" style="width:300px;height:300px;"></textarea> -->
+      <textarea id="csv-2" class="form-control md-6" rows="1"></textarea>
+      <form action="{% url 'ubi_mea' part user.name %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" id="text_acc" name="text_acc" val="">
+        <input type="hidden" id="text_test" name="text_test" val="">
+        <input type="submit" class="submit btn btn-primary col-md-4 my-4" value = "加速度データ送信">
+      </form>
+    </div>
+
+  </body>
+
+<!--  ===========================================  -->
+<script type="text/javascript">
+// alert("Welcome to sample page 4!");
+var to_graph_x = []
+var to_graph_y = []
+var to_graph_z = []
+
+var text_acc = ""
+var text_test = ""
+
+//////////////////////////////////////////////////////
+//Function to get sensor access permission from the browser
+//////////////////////////////////////////////////////
+
+window.onload = function(){
+  //100ミリ秒毎に関数「showNowDate()」を呼び出す
+  setInterval("showNow()", 500);
+}
+
+function requestMotionPermission(){
+  if ( DeviceMotionEvent &&
+       typeof DeviceMotionEvent.requestPermission === 'function' ){
+      // iOS 13+ の Safari
+      // 許可を取る
+      DeviceMotionEvent.requestPermission().then(permissionState => {
+	  if (permissionState === 'granted') {
+              // 許可を得られた場合???devicemotionをイベントリスナ??に追??
+	      window.addEventListener("devicemotion", handleAcceleration, false);
+	  } else {
+              // 許可を得られなかった???合??処??
+	      console.log("Perrmission not granted!");
+	      alert("Perrmission not granted!");
+	  }
+      }).catch(console.error) // https通信でな????合などで許可を取得できなかった?????
+
+  } else {
+      //For other devices
+      console.log("detected other device. so adding listener...");
+      window.addEventListener("devicemotion", handleAcceleration, false);
+  }
+
+}
+
+function stopDeviceMotion(){ 
+    window.removeEventListener("devicemotion", handleAcceleration, false);
+}
+
+
+
+// ////////////////////////////////////////////////////////////////////
+// //Function(1): to handle acceleration data
+// //  - This function will be called about 10-50 times per second
+// ////////////////////////////////////////////////////////////////////
+function handleAcceleration(ev){
+    //alert("" + event.acceleration.x + " " + event.acceleration.y + " " + event.acceleration.z);
+    $('#accel-x').text( ev.acceleration.x );
+    $('#accel-y').text( ev.acceleration.y );
+    $('#accel-z').text( ev.acceleration.z );
+
+    var e_time = new Date();
+    // $('#acc-csv').append(e_time.getTime() + "," + ev.acceleration.x.toFixed(3) + ","+ ev.acceleration.y.toFixed(3) + "," + ev.acceleration.z.toFixed(3) + "\n");
+    $('#csv-2').text( to_graph_x.length );
+    to_graph_x.push(ev.acceleration.x.toFixed(3))
+
+    text_acc += ev.acceleration.x.toFixed(3) + ", "+ ev.acceleration.y.toFixed(3) + ", " + ev.acceleration.z.toFixed(3) + "\n"
+
+    $('#text_acc').val( text_acc );
+
+}
+
+function showNow(){
+  var e_time = new Date();
+  e_time.setTime(e_time.getTime() - 1000*60*60*25 - 60000);
+  var nowYear = e_time.getFullYear(); // 時を抜き出す
+  var nowMonth = ("0"+(e_time.getMonth() + 1)).slice(-2); // 時を抜き出す
+  var nowDay = ("0"+(e_time.getDate() + 1)).slice(-2); // 時を抜き出す
+  var nowHour = ("0"+(e_time.getHours() + 1)).slice(-2); // 時を抜き出す
+  var nowMin  = ("0"+(e_time.getMinutes() + 1)).slice(-2); // 時を抜き出す
+  var nowSec  =("0"+(e_time.getSeconds() + 1)).slice(-2); // 時を抜き出す
+  var time = nowYear + " " + nowMonth + "/" + nowDay + "  " +  nowHour + ":" + nowMin + ":" + nowSec;
+  $('#now').text( time );
+
+  text_test += "hello" + "\n"
+
+  $('#text_test').val( text_test );
+
+}
+
+</script>
+<!--  ===========================================  -->
+
+
+</html>

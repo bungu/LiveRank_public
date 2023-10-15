@@ -1,0 +1,45 @@
+User-agent: *
+Allow: /
+DisAllow: /LiveRank/static
+DisAllow: /admin
+DisAllow: /*.png$
+
+DisAllow: /*/daily%E9%9F%B3%E6%A5%BD/1
+DisAllow: /*/weekly%E9%9F%B3%E6%A5%BD/1
+DisAllow: /*/total%E9%9F%B3%E6%A5%BD/1
+DisAllow: /*/Vtuber%2BGlobal/%E6%89%80
+DisAllow: /liver/UC3c8PW1C5kJGbCRjFJoTDwA
+
+DisAllow: /*/2
+DisAllow: /*/3
+DisAllow: /*/4
+DisAllow: /*/5
+DisAllow: /*/6
+DisAllow: /*/7
+DisAllow: /*/8
+DisAllow: /*/9
+DisAllow: /*/10
+DisAllow: /*/11
+DisAllow: /*/12
+DisAllow: /*/13
+DisAllow: /*/14
+DisAllow: /*/15
+DisAllow: /*/16
+DisAllow: /*/17
+DisAllow: /*/18
+DisAllow: /*/19
+DisAllow: /*/20
+DisAllow: /*/21
+DisAllow: /*/22
+DisAllow: /*/23
+DisAllow: /*/24
+DisAllow: /*/25
+DisAllow: /*/26
+DisAllow: /*/27
+DisAllow: /*/28
+DisAllow: /*/29
+DisAllow: /*/30
+DisAllow: /*/31
+DisAllow: /*/32
+
+Sitemap: https://www.liverank.jp/LiveRank/static/LiveRank/sitemap.xml
