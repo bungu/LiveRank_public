@@ -24,7 +24,7 @@ https://www.liverank.jp/ranking <br >
 
 # 力を入れたコード
 ./Liverank/views.py はリクエストを受けた時の処理がまとまっているため多く労力を割きました。
-./management/commands/update.py は毎日の更新処理ですが、やることが多くこれにも労力を割きました。
+.LiveRank/management/commands/update.py は毎日の更新処理ですが、やることが多くこれにも労力を割きました。
 
 # SEO対策
 SEO対策に注力しました。<br >
