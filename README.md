@@ -22,7 +22,7 @@ https://www.liverank.jp/ranking <br >
     - PostgreSQL
 
 
-# 力を入れたコード
+# 特に力を入れたコード
 ./Liverank/views.py はリクエストを受けた時の処理がまとまっているため多く労力を割きました。
 ./LiveRank/management/commands/update.py は毎日の更新処理ですが、やることが多くこれにも労力を割きました。
 
