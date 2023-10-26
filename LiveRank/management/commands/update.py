@@ -26,7 +26,7 @@ class Command(BaseCommand):
     help = "updateコマンド"
 
     def handle(self, *args, **options):
-        # なんかここに書いたものが実行される
+        # ここに書いたものが実行される
         Update()
 
 errorcount = 0 # グローバル変数
@@ -175,7 +175,6 @@ def Update():
             months = Main_Last1month.objects.filter(userid=userid)
             months_days = Main_Last1month.objects.filter(userid=userid).values_list("day",flat=True)
 
-            # もし31日以上更新されてなかったら終了でごぜーます
             if (max(months_days) < today - timedelta(days = 31)) or (liver.name in updated) :
                 if max(months_days) < today - timedelta(days = 31):
                     print(liver.name + "が一ヶ月以上更新されていないようです 最終更新日:"+str(max(months_days)))
@@ -200,7 +199,7 @@ def Update():
                             ).save()
                             print(liver.name + "の" + str(day) + "のlast1monthを新規作成")
                 
-                # 欠けてる日(≒更新をサボった日)の登録者数を更新(欠けてる日を埋める方法はないので、全部同じ値で埋める)
+                # 欠けてる日の登録者数を更新(欠けてる日を埋める方法はないので、全部同じ値で埋める)
 
                 # 辞書の配列を作成, 昨日の分だけ確定　
                 # BUG:ここはsubscriber_totalに最新の値が入ってないとバグるが、上で更新してるから多分おおよそ問題ないンゴね~
