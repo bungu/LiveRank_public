@@ -51,14 +51,14 @@ from django.views.decorators.csrf import csrf_exempt
 load_dotenv()
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
-# 日本語のパラメーターを用意
+# パラメーターに渡す用の日本語を用意
 def set_jap_params(term,order):
-    # orderの設定
+    # orderの日本語化
     if(order == "superchat"):
         order_jap = "スパチャ"
     elif(order == "subscriber"):
         order_jap = "登録者数"
-    # termの設定
+    # termの日本語化
     if term == "total":
         term_jap = "累計"
     elif term == "monthly":
@@ -76,6 +76,7 @@ def set_kinou_wakekata():
     wakekata = 10
     return {"kinou":kinou, "wakekata":wakekata}
 
+# アクセス数をカウント
 def access_count():
     master = Master.objects.all()[0]
     Master(
@@ -84,6 +85,7 @@ def access_count():
         pv_count = master.pv_count + 1
     ).save()
 
+# ランキングページのコントローラー
 def ranking(request,term,order,page):
 
     access_count()
@@ -145,6 +147,7 @@ def ranking(request,term,order,page):
         params["orderform"] = OrderForm(request.POST)
     return render(request,"LiveRank/ranking.html",params)
 
+# トップページのコントローラー
 def ranking_top(request):
 
     access_count()
@@ -193,10 +196,11 @@ def ranking_top(request):
     }
     return render(request,"LiveRank/ranking.html",params)
 
-
+# トップページへのリダイレクト
 def redirect_to_top(request):
     return redirect(to="/ranking")
 
+# タグが付いているランキングページのコントローラー
 def tag_ranking(request,term,tag,order,page):
 
     access_count()
@@ -239,7 +243,7 @@ def tag_ranking(request,term,tag,order,page):
                         qs[i].add(~Q(tags = tag_object),Q.OR)
                     tag_h += t + " / "
         tag_h = tag_h[:len(tag_h)-3]
-        # Qのandはなんか動かんかったのでfilterで擬似and
+        # Qのandは動かなかったためfilterで擬似and
         data = Main.objects.prefetch_related("tags").filter(qs[0]).filter(qs[1]).filter(qs[2]).filter(qs[3]).order_by(order+"_"+term).reverse()
         h1 = "<div class='tag_h1'>" +tag_h+ " の</div>" + order_jap + "ランキング(" + term_jap + ")"
         title ="ライブランク！：" +  tag_h.replace("/","") + "の" + order_jap + "ランキング"
@@ -283,6 +287,7 @@ def tag_ranking(request,term,tag,order,page):
     
     return render(request,"LiveRank/ranking.html",params)
 
+# タグが関連付けられたトップページのコントローラー
 def tag_top(request,tag):
 
     access_count()
@@ -365,6 +370,7 @@ def filter(request,term,order):
     # return render(request,"LiveRank/filter_test.html",params)
     return redirect(to='/ranking/' + order + '/' + term + '/' +tags+'/1')
 
+# 検索語があるランキングのコントローラー
 def find_ranking(request,term,order,find,page):
 
     access_count()
@@ -420,6 +426,7 @@ def find_ranking(request,term,order,find,page):
     
     return render(request,"LiveRank/ranking.html",params)
 
+# 検索が行われた場合の分岐処理
 def find(request):
     if(request.method == "POST"):
         if request.POST.get('find') != "":
@@ -432,6 +439,7 @@ def find(request):
         # return redirect(to="")
 
 
+# 個人ページのコントローラー
 def liver(request,userid):
 
     access_count()
@@ -525,6 +533,7 @@ def liver(request,userid):
     
     return render(request,"LiveRank/liver.html",params)
 
+# プライバシーポリシーページのコントローラー
 def policy(request):
 
     access_count()
@@ -532,6 +541,7 @@ def policy(request):
     params = {}
     return render(request,"LiveRank/policy.html",params)
 
+# 統計に関するポリシーのページのコントローラー
 def statistic_policy(request):
 
     access_count()
@@ -539,6 +549,7 @@ def statistic_policy(request):
     params = {}
     return render(request,"LiveRank/statistic_policy.html",params)
 
+# ライバーをDBに追加するページ（管理者用）のコントローラー
 def add(request):
     if (request.method == 'POST'):
         main_userids = Main.objects.all().values_list("userid",flat=True)
@@ -614,6 +625,7 @@ def add(request):
         params = {}
         return render(request,"LiveRank/add.html",params)
 
+# SNS投稿用画像を作るためのページのコントローラー
 def no1(request):
     orders = ["superchat","subscriber"]
     terms = ["total","monthly","weekly","daily"]
@@ -671,6 +683,7 @@ def no1(request):
         }
         return render(request,"LiveRank/bunki.html",params)
 
+# SNS投稿用画像を作るためのページのコントローラー
 def no2_4(request):
     if (request.method == 'POST'):
         orders = ["superchat","subscriber"]
@@ -781,6 +794,7 @@ def main_delete(request):
     # b.delete()
     return redirect(to='/admin')
 
+# Youtube用画像を作るためのページのコントローラー
 def youtube(request,term,order,page):
     if (request.method == 'POST'):
         if request.POST.get('pass') == 'opayouliverank':
@@ -804,17 +818,18 @@ def youtube(request,term,order,page):
             }
             return render(request,"LiveRank/bunki.html",params)
 
+# faviconを示すためのコントローラー
 def favicon(request):
     params = {}
     return render(request,"LiveRank/favicon.html",params)
 
 
 
-#########################
-#                       #
-# これ以降は授業用ページ    #
-#                       #
-#########################
+#####################################
+#                                   #
+# これ以降は授業用ページ（別のサイト）    #
+#                                   #
+#####################################
 
 def ubi_ai(request):
     params = {}
