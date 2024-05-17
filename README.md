@@ -23,7 +23,7 @@ https://www.liverank.jp/ranking <br >
 
 
 # 特に力を入れたコード
-[./Liverank/views.py](https://github.com/bungu/LiveRank_public/blob/main/LiveRank/views.py) はリクエストを受けた時の処理がまとまっているため多く労力を割きました。
+[./Liverank/views.py](https://github.com/bungu/LiveRank_public/blob/main/LiveRank/views.py) はリクエストを受けた時の処理がまとまっているため多く労力を割きました。<br >
 [./LiveRank/management/commands/update.py](https://github.com/bungu/LiveRank_public/blob/main/LiveRank/management/commands/update.py) は毎日の更新処理ですが、やることが多くこれにも労力を割きました。
 
 # SEO対策
