@@ -10,6 +10,9 @@ YouTube人気配信者を対象にしたスーパーチャットの集計サイ�
 # URL
 https://www.liverank.jp/ranking <br >
 
+# 制作期間
+2021年夏〜2022年春
+
 # 使用技術
 - Python
     - Django
