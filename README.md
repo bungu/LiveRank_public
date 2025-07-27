@@ -26,7 +26,7 @@ https://www.liverank.jp/ranking <br >
 
 
 # 特に力を入れたコード
-[./LiveRank/management/commands/update.py](https://github.com/bungu/LiveRank_public/blob/main/LiveRank/management/commands/update.py) は毎日の更新処理で、やることが多く、労力を割きました。<br >
+[./LiveRank/management/commands/update.py](https://github.com/bungu/LiveRank_public/blob/main/LiveRank/management/commands/update.py) は毎日の更新処理ですが、やることが多く、労力を割きました。<br >
 2025年7月にリファクタリングしており、リリース当時のコードは
 [./LiveRank/management/commands/update_old.py](https://github.com/bungu/LiveRank_public/blob/main/LiveRank/management/commands/update_old.py) 
 に配置しています。
