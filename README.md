@@ -27,9 +27,9 @@ https://www.liverank.jp/ranking <br >
 
 # 特に力を入れたコード
 [./LiveRank/management/commands/update.py](https://github.com/bungu/LiveRank_public/blob/main/LiveRank/management/commands/update.py) は毎日の更新処理ですが、やることが多く、労力を割きました。<br >
-2025年7月にリファクタリングしました。リリース当時のコードは
+2026年2月にリファクタリングしました。リリース当時のコードは
 [./LiveRank/management/commands/update_old.py](https://github.com/bungu/LiveRank_public/blob/main/LiveRank/management/commands/update_old.py) 
-に配置しています。
+に配置されています。
 
 # SEO対策
 SEO対策に注力しました。<br >
@@ -43,5 +43,6 @@ SEO対策に注力しました。<br >
 - 条件絞り込み(事務所/言語圏/性別/Vtuberかどうか等)
 - 文字列による配信者の検索
 - 自動更新(サーバー内)
+- 絞り込み推薦(サーバー内)
 - ツイート(ポスト)用画像生成機能(管理者用)
 - 配信者登録機能(管理者用)
